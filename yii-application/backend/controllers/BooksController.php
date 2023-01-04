@@ -25,43 +25,45 @@ class BooksController extends \yii\web\Controller
         $categories = new Categories();
 
         if($autors->load(Yii::$app->request->post()))
-        {
-            if($books->load(Yii::$app->request->post()) && $autors->save(false))
+        {   
+            $ifexists = Autors::find()->where(['like', 'name', $autors->name, false])->andWhere(['like', 'surname', $autors->surname, false])->andWhere(['like', 'country', $autors->country, false])->one();
+
+            if($ifexists && $books->load(Yii::$app->request->post()))
             {
-                
-                // $isValid = $books->validate();
-                // $isValid = $autors->validate() && $isValid;
-                // $isValid = $categories->validate() && $isValid;
+                $books->autor_id = (int) $ifexists->id;
+                $this->getBookData($books);
+            }
+
+            elseif($books->load(Yii::$app->request->post()) && $autors->save(false))
+            {
                 $books->autor_id = $autors->id;
-
-                $image = UploadedFile::getInstance($books, 'img');
-                $image->saveAs('books_img/' . $image->baseName . '.' . $image->extension);
-
-                $books->img = $image->baseName . '.' . $image->extension;
-                print($books->img);
-                echo $books->img;
-
-                // if($isValid) {
-                //     $books->save(false);
-                //     $autors->save(false);
-                //     $categories->save(false);
-                //     return $this->redirect(['book', 'id' => $books->id]);
-                // }
-                if($books->save(false) && $autors->save(false)) {
-                    
-                    return $this->redirect(['book', 'id' => $books->id]);
-                }
-                
+                $this->getBookData($books);
             }
         }
-
-        
 
         return $this->render('create', [
             'books' => $books,
             'autors' => $autors,
             'categories' => $categories
         ]);
+    }
+
+
+
+
+    private function getBookData($books)
+    {
+        $image = UploadedFile::getInstance($books, 'img');
+        $image->saveAs('books_img/' . $image->baseName . '.' . $image->extension);
+
+        $books->img = $image->baseName . '.' . $image->extension;
+        print($books->img);
+        echo $books->img;
+
+        if($books->save(false)) {
+            
+            return $this->redirect(['book', 'id' => $books->id]);
+        }
     }
 
 }
