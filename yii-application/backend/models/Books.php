@@ -35,8 +35,8 @@ class Books extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'autor_id', 'category_id', 'publ_year', 'description', 'img'], 'required'],
-            [['autor_id', 'category_id'], 'integer'],
+            [['title', 'autor_id', 'category_id', 'publ_year', 'description', 'img', 'quantity'], 'required'],
+            [['autor_id', 'category_id', 'quantity'], 'integer'],
             [['publ_year'], 'safe'],
             [['description'], 'string'],
             [['title'], 'string', 'max' => 200],
@@ -59,6 +59,7 @@ class Books extends \yii\db\ActiveRecord
             'publ_year' => 'Publ Year',
             'description' => 'Description',
             'img' => 'Img',
+            'quantity' => 'Quantity',
         ];
     }
 

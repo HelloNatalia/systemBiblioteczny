@@ -6,7 +6,7 @@ use yii\helpers\Url;
 /** @var yii\web\View $this */
 ?>
 
-
+<a href="<?=Url::to(['create'])?>"><button id="new_book">Add new book</button></a>
 <?php foreach($models as $model) { ?>
 
     <div class="book">
@@ -27,9 +27,9 @@ use yii\helpers\Url;
             <?php } ?>
         </div>
         <div class="buttons">
-            <button>Show details</button>
-            <button>Edit</button>
-            <button>Delete</button>
+            <a href="<?=Url::to(['book'])?>"><button>Show details</button></a>
+            <a href="<?=Url::to(['edit'])?>"><button>Edit</button></a>
+            <a href="<?=Url::to(['delete'])?>"><button>Delete</button></a>
         </div>
         <br><br>
     </div>
