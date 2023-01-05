@@ -8,19 +8,29 @@ use backend\models\Books;
 use backend\models\Autors;
 use backend\models\Categories;
 use yii\web\UploadedFile;
+use yii\data\Pagination;
 
 class BooksController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id')->all();
+        $query = Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id');
            
         if($search = Yii::$app->request->get('title')){
             if($search != '')
-                $models = $this->getSearch($search);
+                $query = $this->getSearch($search);
         } 
 
-        return $this->render('index', ['models' => $models]);
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render('index', [
+            'models' => $models,
+            'pages' => $pages,
+        ]);
 
     }
 
