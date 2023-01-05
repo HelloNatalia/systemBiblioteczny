@@ -14,6 +14,7 @@ $names = Autors::find()
 <?php $form = ActiveForm::begin(['options' => ['class' => 'form-inline']])?>
 
 
+
 <?= Html::submitButton('filter')?>
  <?= Html::a('A-Z', ['index', 'order' => 'asc'])?>
  <?= Html::a('Z-A', ['index', 'order' => 'desc'])?>
