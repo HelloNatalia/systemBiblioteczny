@@ -2,10 +2,17 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 // use yii\bootstrap5\Modal;
 
 /** @var yii\web\View $this */
 ?>
+
+<?= $this->render('_search')?>
+
+<br><br>
+
+
 
 <a href="<?=Url::to(['create'])?>"><button id="new_book">Add new book</button></a>
 <?php foreach($models as $model) { ?>

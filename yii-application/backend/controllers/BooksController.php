@@ -13,9 +13,15 @@ class BooksController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Books::find()->leftJoin('autors', 'autors.id=books.autor_id')->all();
+        $models = Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id')->all();
+           
+        if($search = Yii::$app->request->get('title')){
+            if($search != '')
+                $models = $this->getSearch($search);
+        } 
 
         return $this->render('index', ['models' => $models]);
+
     }
 
     public function actionCreate()
@@ -114,6 +120,11 @@ class BooksController extends \yii\web\Controller
         if($books->save(false)) {
             return $this->redirect(['book', 'id' => $books->id]);
         }
+    }
+
+    private function getSearch($search)
+    {
+        return Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id')->where(['like', 'title', $search])->all();
     }
 
 }
