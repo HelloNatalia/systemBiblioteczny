@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\helpers\Url;
+// use yii\bootstrap5\Modal;
 
 /** @var yii\web\View $this */
 ?>
@@ -27,9 +28,9 @@ use yii\helpers\Url;
             <?php } ?>
         </div>
         <div class="buttons">
-            <a href="<?=Url::to(['book'])?>"><button>Show details</button></a>
-            <a href="<?=Url::to(['edit'])?>"><button>Edit</button></a>
-            <a href="<?=Url::to(['delete'])?>"><button>Delete</button></a>
+            <a href="<?=Url::to(['book', 'id' => $model->id])?>"><button>Show details</button></a>
+            <a href="<?=Url::to(['update', 'id' => $model->id])?>"><button>Edit</button></a>
+            <a href="<?= Url::to(['delete-view', 'id' => $model->id])?>"><button>Delete</button></a>
         </div>
         <br><br>
     </div>

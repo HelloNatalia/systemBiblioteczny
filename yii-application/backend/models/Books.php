@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 
+
 /**
  * This is the model class for table "books".
  *
@@ -21,6 +22,8 @@ use Yii;
  */
 class Books extends \yii\db\ActiveRecord
 {
+
+
     /**
      * {@inheritdoc}
      */
