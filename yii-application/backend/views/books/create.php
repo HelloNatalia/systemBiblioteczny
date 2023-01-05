@@ -26,7 +26,8 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 <?= $form->field($books, 'category_id')->dropdownList([$cat_items],
     ['prompt' => 'Select Category'])->label('Category')?>
 
-<?= $form->field($books, 'publ_year')->textInput(['type' => 'number'])->label('Publication year')?>
+<?= $form->field($books, 'publ_year')->textInput(['type' => 'number', ['maxlength' => 4]])->label('Publication year')?>
+
 <?= $form->field($books, 'description')->textArea()?>
 <?= $form->field($books, 'img')->fileinput(['multiple' => false, 'accept' => 'image/*'])?>
 <?= $form->field($books, 'quantity')->textInput(['type' => 'number'])?>
