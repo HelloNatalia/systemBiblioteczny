@@ -28,15 +28,9 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 
 <?= $form->field($books, 'publ_year')->textInput(['type' => 'number'])->label('Publication year')?>
 <?= $form->field($books, 'description')->textArea()?>
-<?= $form->field($books, 'img')->fileinput(['multiple' => false, 'accept' => 'image/*'])?>
+<?php // echo $form->field($books, 'img')->fileinput(['multiple' => false, 'accept' => 'image/*'])?>
 <?= $form->field($books, 'quantity')->textInput(['type' => 'number'])?>
 
 <?= Html::submitButton('Post')?>
 
 <?php ActiveForm::end()?>
-
-
-
-
-
-
