@@ -3,20 +3,19 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Autors;
+use conquer\select2\Select2Widget;
+use yii\helpers\ArrayHelper;
+use yii\bootstrap5\BootstrapAsset;
+use yii\helpers\Url;
 
-
-$names = Autors::find()
-            ->select(['surname'])
-            ->indexBy('id')
-            ->column();
 
 ?>
-<?php $form = ActiveForm::begin(['options' => ['class' => 'form-inline']])?>
 
+<?= Html::beginForm([Url::to('index')], 'get')?>
 
+<?= Html::input('text', 'title', '', ['placeholder' => 'Search for title'])?>
+<?= Html::submitButton('filter/clear')?>
+ <?php // Html::a('A-Z', ['index', 'order' => 'asc'])?>
+ <?php // Html::a('Z-A', ['index', 'order' => 'desc'])?>
 
-<?= Html::submitButton('filter')?>
- <?= Html::a('A-Z', ['index', 'order' => 'asc'])?>
- <?= Html::a('Z-A', ['index', 'order' => 'desc'])?>
-
-<?php ActiveForm::end()?>
+<?= Html::endForm() ?>
