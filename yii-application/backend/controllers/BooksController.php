@@ -13,9 +13,16 @@ class BooksController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Books::find()->leftJoin('autors', 'autors.id=books.autor_id')->all();
+        $models = Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id')->all();
+        if(Yii::$app->request->get('order') === 'desc')
+        {
+            $models = Books::find()->leftJoin('autors', 'autors.id=books.autor_id')->orderBy(['title' => SORT_DESC])->all();
+        }
+
+        
 
         return $this->render('index', ['models' => $models]);
+
     }
 
     public function actionCreate()
