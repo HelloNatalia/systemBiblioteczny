@@ -19,7 +19,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Biblioteka</title>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
@@ -28,7 +28,7 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'Library',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
@@ -36,6 +36,10 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Books', 'url' => ['/books/index']],
+        ['label' => 'Borrows', 'url' => ['/borrow/index']],
+        ['label' => 'Readers', 'url' => ['/reader/index']],
+        ['label' => 'Cash', 'url' => ['/cash/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -55,6 +59,9 @@ AppAsset::register($this);
             . Html::endForm();
     }
     NavBar::end();
+
+    
+
     ?>
 </header>
 

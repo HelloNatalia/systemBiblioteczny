@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use backend\models\Categories;
 
+echo $this->render('_submenubook');
+
 ?>
 <a href="<?=Url::to(['update', 'id' => $model->id])?>"><button>Update</button></a>
 <?= Html::img(Url::to('@web/books_img/' . $model->img), ['style' => 'width: 200px'])?>

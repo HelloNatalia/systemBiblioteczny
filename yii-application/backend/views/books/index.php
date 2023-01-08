@@ -9,6 +9,8 @@ use yii\widgets\LinkPager;
 /** @var yii\web\View $this */
 ?>
 
+<?= $this->render('_submenubook')?>
+
 <?= $this->render('_search')?>
 
 <br><br>
