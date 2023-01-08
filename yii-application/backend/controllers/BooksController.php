@@ -18,7 +18,7 @@ class BooksController extends \yii\web\Controller
            
         if($search = Yii::$app->request->get('title')){
             if($search != '')
-                $query = $this->getSearch($search);
+                $query = $this->getSearch($search, 'title');
         } 
 
         $countQuery = clone $query;
@@ -115,6 +115,33 @@ class BooksController extends \yii\web\Controller
         
     }
 
+    public function actionAuthors()
+    {
+        $query = Autors::find();
+           
+        if($search = Yii::$app->request->get('author')){
+            if($search != '')
+                $query = $this->getSearch($search, 'author');
+        } 
+
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return $this->render('authors', [
+            'models' => $models,
+            'pages' => $pages,
+        ]);
+    }
+
+    public function actionAuthor($id)
+    {
+        $models = Books::find()->where('autor_id = ' . $id)->all();
+        return $this->render('author', ['models' => $models, 'id' => $id]);
+    }
+
 
 
     private function getBookData($books, $bool)
@@ -132,9 +159,16 @@ class BooksController extends \yii\web\Controller
         }
     }
 
-    private function getSearch($search)
+    private function getSearch($search, $what)
     {
-        return Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id')->where(['like', 'title', $search])->all();
+        if($what == 'title')
+        {
+            return Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id')->where(['like', 'title', $search]);
+        }
+        else {
+            return Autors::find()->andFilterWhere(['like', 'Concat(name," ", surname)', $search]);
+        }
+        
     }
 
 }
