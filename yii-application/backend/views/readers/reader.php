@@ -1,8 +1,15 @@
 <?php
 
+use yii\helpers\Url;
+
 ?>
 
-<h3><?=$model->name?> <?=$model->surname?></h3>
+<h3><?=$model->name?> <?=$model->surname?></h3><br>
+
+
+<a href="<?=Url::to(['update', 'id' => $model->id])?>"><button>Update</button></a>
+<a href="<?=Url::to(['delete-view', 'id' => $model->id])?>"><button>Delete</button></a>
+
 
 <p><b>ID: </b><?=$model->id?></p>
 <p><b>PESEL: </b><?=$model->PESEL?></p>
