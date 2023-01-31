@@ -24,7 +24,7 @@ $this->title = 'My Yii Application';
             </div>
             <div class="col-lg-3">
                 <h2>Readers</h2>
-                <p><a class="btn btn-lg btn-success" href="index.php?r=reader%2Findex">Go to readers</a></p>
+                <p><a class="btn btn-lg btn-success" href="index.php?r=readers%2Findex">Go to readers</a></p>
             </div>
             <div class="col-lg-3">
                 <h2>Cash</h2>
