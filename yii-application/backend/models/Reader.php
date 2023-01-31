@@ -40,7 +40,7 @@ class Reader extends \yii\db\ActiveRecord
             [['birth_date'], 'safe'],
             [['name', 'email'], 'string', 'max' => 100],
             [['surname'], 'string', 'max' => 150],
-            [['PESEL'], 'string', 'max' => 11],
+            [['PESEL'], 'string', 'max' => 11, 'unique'],
             [['tel_number'], 'string', 'max' => 15],
             [['address_id'], 'exist', 'skipOnError' => true, 'targetClass' => Address::class, 'targetAttribute' => ['address_id' => 'id']],
         ];

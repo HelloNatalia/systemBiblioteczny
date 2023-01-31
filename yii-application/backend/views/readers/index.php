@@ -1,9 +1,13 @@
 <?php
 /** @var yii\web\View $this */
+use yii\helpers\Url;
 ?>
-<h1>readers/index</h1>
+<h2>Czytelnicy</h2>
+<br>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+<?php foreach ($models as $model) { ?>
+<a href="<?=Url::toRoute(['/readers/reader', 'id' => $model->id])?>">
+    <?=$model->name?> <?=$model->surname?> <?=$model->email?> id: <?=$model->id?>
+</a><br>
+<?php } ?>
+
