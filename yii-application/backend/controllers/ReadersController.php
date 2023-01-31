@@ -41,8 +41,8 @@ class ReadersController extends \yii\web\Controller
                 }
             }
         }
-
-        return $this->render('create', ['reader' => $reader, 'address' => $address]);
+        
+        return $this->render('create', ['reader' => $reader, 'address' => $address, 'exists_info' => ""]);
     }
 
 }

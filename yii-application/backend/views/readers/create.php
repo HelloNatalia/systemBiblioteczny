@@ -3,13 +3,14 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
-
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 
 <?= $form->field($reader, 'name')->textInput() ?>
 <?= $form->field($reader, 'surname')->textInput() ?>
 <?= $form->field($reader, 'birth_date')->textInput(['placeholder' => 'yyyy-mm-dd']) ?>
 <?= $form->field($reader, 'PESEL')->textInput(['type' => 'number'])?>
+<p><?php if($exists_info != "") {
+    echo $exists_info; } ?></p>
 <?= $form->field($reader, 'email')->textInput() ?>
 <?= $form->field($reader, 'tel_number')->textInput(['type' => 'number'])?>
 
