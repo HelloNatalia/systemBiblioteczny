@@ -7,6 +7,7 @@ use backend\models\Borrow;
 use backend\models\Books;
 use backend\models\Reader;
 use backend\models\Autors;
+use backend\models\Days;
 use DateTime;
 use backend\models\Returns;
 
@@ -15,16 +16,27 @@ class BorrowController extends \yii\web\Controller
     public function actionIndex()
     {
         $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->where(['returned' => 0])->orderBy(['return_date' => SORT_ASC])->all();
-        
+
         return $this->render('index', ['models' => $models]);
     }
 
-    public function actionExtend($id)
+    public function actionExtendDays($id)
+    {
+        $days = new Days();
+
+        if($days->load(Yii::$app->request->post())){
+            return $this->redirect(['extend', 'id' => $id, 'days' => $days->quantity]);
+        }
+
+        return $this->render('extend-days', ['borrow_id' => $id, 'days' => $days]);
+    }
+
+    public function actionExtend($id, $days)
     {
         $borrow = Borrow::findOne(['id' => $id]);
         $return_date = new DateTime($borrow->return_date);
 
-        $return_date->modify("+30 day");
+        $return_date->modify("+" . $days . " day");
         $return_date = $return_date->format('Y-m-d H:i:s');
         $borrow->return_date = $return_date;
         if($borrow->save(false)) {
@@ -60,6 +72,7 @@ class BorrowController extends \yii\web\Controller
     public function actionCreate($id)
     {
         $borrow = new Borrow();
+        $days = new Days();
 
         if($id != ''){
             if(Books::find()->andWhere(['id' => $id])->andWhere(['>', 'quantity', 0])->one()){
@@ -79,12 +92,13 @@ class BorrowController extends \yii\web\Controller
             $r_items[$reader->id] = $reader->id . ' - ' . $reader->name . ' ' . $reader->surname . ' - PESEL: ' . $reader->PESEL;
         }
 
-        if($borrow->load(Yii::$app->request->post())) {
+        if($borrow->load(Yii::$app->request->post()) && $days->load(Yii::$app->request->post())) {
+
             $now = new DateTime('now', new \DateTimeZone('UTC'));
             $dbnow = $now->format('Y-m-d H:i:s');
 
             $returndate = new DateTime('now', new \DateTimeZone('UTC'));
-            $returndate = $returndate->modify("+30 day");
+            $returndate = $returndate->modify("+" . $days->quantity . " day");
             $returndate = $returndate->format('Y-m-d H:i:s');
 
             $borrow->date_time = $dbnow;
@@ -101,6 +115,7 @@ class BorrowController extends \yii\web\Controller
             'borrow' => $borrow, 
             'b_items' => $b_items,
             'r_items' => $r_items,
+            'days' => $days,
         ]);
     }
 
