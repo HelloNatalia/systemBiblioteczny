@@ -17,5 +17,5 @@ use yii\helpers\Url;
 <h3><b>Do zwrotu: </b> <?=$pricetopay?> zł</h3><br><br>
 
 
-<a href="<?=Url::to(['pay-extend', 'id' => $model->id])?>"><button>Przedłuż wypożyczenie</button></a>
+<a href="<?=Url::to(['pay-extend', 'id' => $model->id, 'days' => $days, 'price' => $pricetopay])?>"><button>Przedłuż wypożyczenie</button></a>
 <a href="<?=Url::to(['pay-end', 'id' => $model->id, 'days' => $days, 'price' => $pricetopay])?>"><button>Zakończ wypożyczenie</button></a>

@@ -5,8 +5,10 @@ namespace backend\controllers;
 use backend\models\Borrow;
 use backend\models\Prices;
 use yii\db\Expression;
+use yii;
 use yii\DateTime;
 use backend\models\Autors;
+use backend\models\Returns;
 
 class CashController extends \yii\web\Controller
 {
@@ -36,6 +38,55 @@ class CashController extends \yii\web\Controller
             'pricetopay' => $pricetopay,
             'author' => $author,
         ]);
+    }
+
+    public function actionPayEnd($id, $days, $price)
+    {
+        $borrow = Borrow::findOne(['id' => $id]);
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
+        $dbnow = $now->format('Y-m-d H:i:s');
+
+        $borrow->returned_date = $dbnow;
+        $borrow->returned = 1;
+
+        $returns = new Returns();
+        $returns->borrow_id = $id;
+        $returns->days = $days;
+        $returns->price = $price;
+        $returns->returned_date = $dbnow;
+        $returns->extended = 0;
+
+        if($returns->save(false)) {
+            if($borrow->save(false)) {
+                return $this->redirect(['index']);
+            }
+        }
+    }
+
+    public function actionPayExtend($id, $days, $price)
+    {
+        $borrow = Borrow::findOne(['id' => $id]);
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
+        $dbnow = $now->format('Y-m-d H:i:s');
+
+        $new_date = new \DateTime('now', new \DateTimeZone('UTC'));
+        $new_date = $new_date->modify("+30 day");
+        $new_date = $new_date->format('Y-m-d H:i:s');
+
+        $borrow->return_date = $new_date;
+
+        $returns = new Returns();
+        $returns->borrow_id = $id;
+        $returns->days = $days;
+        $returns->price = $price;
+        $returns->returned_date = $dbnow;
+        $returns->extended = 1;
+
+        if($returns->save(false)) {
+            if($borrow->save(false)) {
+                return $this->redirect(['index']);
+            }
+        }
     }
 
 }
