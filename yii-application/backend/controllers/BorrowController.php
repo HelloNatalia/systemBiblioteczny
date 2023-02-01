@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
+use Yii;
 use backend\models\Borrow;
 use backend\models\Books;
 use backend\models\Reader;
-use Yii;
 use DateTime;
 use backend\models\Returns;
 
@@ -51,6 +51,47 @@ class BorrowController extends \yii\web\Controller
                 return $this->redirect(['index']);
             }
         }
+    }
+
+    public function actionCreate()
+    {
+        $borrow = new Borrow();
+
+        $b_items = array();
+        $books = Books::find()->leftJoin('autors', 'autors.id = books.autor_id')->where(['>', 'quantity', 0])->all();
+        foreach($books as $book) {
+            $b_items[$book->id] = $book->id . ' - ' . $book->title . ' - ' . $book->autor->name . ' ' . $book->autor->surname . ' - sztuk: ' . $book->quantity;
+        }
+
+        $r_items = array();
+        $readers = Reader::find()->all();
+        foreach($readers as $reader){
+            $r_items[$reader->id] = $reader->id . ' - ' . $reader->name . ' ' . $reader->surname . ' - PESEL: ' . $reader->PESEL;
+        }
+
+        if($borrow->load(Yii::$app->request->post())) {
+            $now = new DateTime('now', new \DateTimeZone('UTC'));
+            $dbnow = $now->format('Y-m-d H:i:s');
+
+            $returndate = new DateTime('now', new \DateTimeZone('UTC'));
+            $returndate = $returndate->modify("+30 day");
+            $returndate = $returndate->format('Y-m-d H:i:s');
+
+            $borrow->date_time = $dbnow;
+            $borrow->return_date = $returndate;
+            $borrow->returned = 0;
+
+            if($borrow->save(false)) {
+                return $this->redirect(['created-borrow', 'id' => $borrow->id]);
+            }
+
+        }
+
+        return $this->render('create', [
+            'borrow' => $borrow, 
+            'b_items' => $b_items,
+            'r_items' => $r_items,
+        ]);
     }
 
 }
