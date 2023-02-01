@@ -5,9 +5,10 @@ use yii\DateTime;
 
 ?>
 
-<h2>Wypożyczenia: </h2><br><br>
+<h2>Wypożyczenia: </h2><br>
 
-
+<a href="<?=Url::to(['create', 'id' => ''])?>"><button>Dodaj</button></a>
+<br><br>
 
     <table style="border: 1px solid;">
         <tr style="border: 1px solid;">

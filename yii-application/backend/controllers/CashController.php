@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\Borrow;
 use backend\models\Prices;
+use backend\models\Books;
 use yii\db\Expression;
 use yii;
 use yii\DateTime;
@@ -56,8 +57,11 @@ class CashController extends \yii\web\Controller
         $returns->returned_date = $dbnow;
         $returns->extended = 0;
 
+        $stock = Books::find()->where(['id' => $borrow->book_id])->one();
+        $stock->quantity += 1;
+
         if($returns->save(false)) {
-            if($borrow->save(false)) {
+            if($borrow->save(false) && $stock->save(false)) {
                 return $this->redirect(['index']);
             }
         }

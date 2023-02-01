@@ -6,6 +6,7 @@ use Yii;
 use backend\models\Borrow;
 use backend\models\Books;
 use backend\models\Reader;
+use backend\models\Autors;
 use DateTime;
 use backend\models\Returns;
 
@@ -46,16 +47,25 @@ class BorrowController extends \yii\web\Controller
         $returns->price = 0;
         $returns->returned_date = $dbnow;
 
+        $stock = Books::find()->where(['id' => $borrow->book_id])->one();
+        $stock->quantity += 1;
+
         if($returns->save(false)) {
-            if($borrow->save(false)) {
+            if($borrow->save(false) && $stock->save(false)) {
                 return $this->redirect(['index']);
             }
         }
     }
 
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $borrow = new Borrow();
+
+        if($id != ''){
+            if(Books::find()->andWhere(['id' => $id])->andWhere(['>', 'quantity', 0])->one()){
+                $borrow->book_id = $id;
+            }   
+        }
 
         $b_items = array();
         $books = Books::find()->leftJoin('autors', 'autors.id = books.autor_id')->where(['>', 'quantity', 0])->all();
@@ -92,6 +102,19 @@ class BorrowController extends \yii\web\Controller
             'b_items' => $b_items,
             'r_items' => $r_items,
         ]);
+    }
+
+    public function actionCreatedBorrow($id)
+    {
+        $model = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->where(['borrow.id' => $id])->one();
+        $author = Autors::find()->where(['id' => $model->book->autor_id])->one();
+
+        $stock = Books::find()->where(['id' => $model->book->id])->one();
+        $stock->quantity -= 1;
+        
+        if($stock->save(false)) {
+            return $this->render('created-borrow', ['model' => $model, 'author' => $author]);
+        }
     }
 
 }

@@ -14,6 +14,6 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 <?= $form->field($borrow, 'book_id')->dropdownList([$b_items],
     ['prompt' => 'Wybierz książkę'])->label('Książka')?>
 
-<?= Html::submitButton('Post')?>
+<?= Html::submitButton('Dodaj')?>
 
 <?php ActiveForm::end()?>
