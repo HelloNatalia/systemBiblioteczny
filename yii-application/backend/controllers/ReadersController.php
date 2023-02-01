@@ -20,7 +20,7 @@ class ReadersController extends \yii\web\Controller
     public function actionReader($id)
     {
         $model = Reader::find()->leftJoin('address', 'reader.address_id = address.id')->where(['reader.id' => $id])->one();
-        $books = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->where(['reader.id' => $model->id])->all();
+        $books = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['reader.id' => $model->id])->andWhere(['borrow.returned' => 0])->all();
         
 
         return $this->render('reader', [
