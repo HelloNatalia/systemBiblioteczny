@@ -8,8 +8,7 @@ use Yii;
  * This is the model class for table "prices".
  *
  * @property int $id
- * @property int $days_after
- * @property float $price
+ * @property float $priceperday
  */
 class Prices extends \yii\db\ActiveRecord
 {
@@ -27,9 +26,8 @@ class Prices extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['days_after', 'price'], 'required'],
-            [['days_after'], 'integer'],
-            [['price'], 'number'],
+            [['priceperday'], 'required'],
+            [['priceperday'], 'number'],
         ];
     }
 
@@ -40,8 +38,7 @@ class Prices extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'days_after' => 'Days After',
-            'price' => 'Price',
+            'priceperday' => 'Priceperday',
         ];
     }
 }
