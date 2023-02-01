@@ -5,6 +5,7 @@ namespace backend\controllers;
 use backend\models\Borrow;
 use backend\models\Prices;
 use backend\models\Books;
+use backend\models\Days;
 use yii\db\Expression;
 use yii;
 use yii\DateTime;
@@ -22,6 +23,8 @@ class CashController extends \yii\web\Controller
 
     public function actionPay($id)
     {
+        $qdays = new Days();
+
         $model = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->where(['borrow.id' => $id])->one();
         $author = Autors::find()->where(['id'=>$model->book->autor_id])->one();
         
@@ -33,11 +36,16 @@ class CashController extends \yii\web\Controller
         $days = $days->format('%a'); 
         $pricetopay = $days * $price->priceperday;
 
+        if($qdays->load(Yii::$app->request->post())) {
+            return $this->redirect(['pay-extend', 'id' => $id, 'days' => $days, 'price' => $pricetopay, 'qdays' => $qdays->quantity]);
+        }
+
         return $this->render('pay', [
             'model' => $model,
             'days' => $days,
             'pricetopay' => $pricetopay,
             'author' => $author,
+            'qdays' => $qdays,
         ]);
     }
 
@@ -67,14 +75,14 @@ class CashController extends \yii\web\Controller
         }
     }
 
-    public function actionPayExtend($id, $days, $price)
+    public function actionPayExtend($id, $days, $price, $qdays)
     {
         $borrow = Borrow::findOne(['id' => $id]);
         $now = new \DateTime('now', new \DateTimeZone('UTC'));
         $dbnow = $now->format('Y-m-d H:i:s');
 
         $new_date = new \DateTime('now', new \DateTimeZone('UTC'));
-        $new_date = $new_date->modify("+30 day");
+        $new_date = $new_date->modify("+" . $qdays . " day");
         $new_date = $new_date->format('Y-m-d H:i:s');
 
         $borrow->return_date = $new_date;

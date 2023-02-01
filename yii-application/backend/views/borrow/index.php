@@ -2,6 +2,8 @@
 
 use yii\helpers\Url;
 use yii\DateTime;
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 ?>
 
@@ -38,7 +40,7 @@ use yii\DateTime;
                         </td>
                     <?php } else { ?>
                         <td style="border: 1px solid; padding: 15px;">
-                            <a href="<?=Url::to(['extend', 'id' => $model->id])?>"><button>Przedłuż</button></a>
+                            <a href="<?=Url::to(['extend-days', 'id' => $model->id])?>"><button>Przedłuż</button></a>
                             <a href="<?=Url::to(['end', 'id' => $model->id])?>"><button>Zakończ</button></a>
                         </td>
                     <?php } ?>
