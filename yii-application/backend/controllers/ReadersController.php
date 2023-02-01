@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Reader;
 use backend\models\Address;
+use backend\models\Borrow;
 
 
 class ReadersController extends \yii\web\Controller
@@ -19,8 +20,13 @@ class ReadersController extends \yii\web\Controller
     public function actionReader($id)
     {
         $model = Reader::find()->leftJoin('address', 'reader.address_id = address.id')->where(['reader.id' => $id])->one();
+        $books = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->where(['reader.id' => $model->id])->all();
+        
 
-        return $this->render('reader', ['model' => $model]);
+        return $this->render('reader', [
+            'model' => $model,
+            'books' => $books,
+        ]);
     }
 
     public function actionCreate()

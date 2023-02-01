@@ -11,6 +11,7 @@ echo $this->render('_submenubook');
 <?= Html::img(Url::to('@web/books_img/' . $model->img), ['style' => 'width: 200px'])?>
 
 <h2><?=$model->title?></h2>
+<p>ID: <?=$model->id?></p>
 <p>Autor: <?=$model->autor->name?> <?=$model->autor->surname?></p>
 <p>Category: <?=$model->category->category_name?></p> <br>
 <p><?=$model->description?></p><br><br>
