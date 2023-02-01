@@ -31,10 +31,17 @@ use yii\DateTime;
                     <td style="border: 1px solid; padding: 15px;"><?=$model->return_date?></td>
                     <td style="border: 1px solid; padding: 15px;"><?=$model->reader->id?> <?=$model->reader->name?> <?=$model->reader->surname?></td>
                     <td style="border: 1px solid; padding: 15px;"><?=$model->book->id?> <?=$model->book->title?></td>
-                    <td style="border: 1px solid; padding: 15px;">
-                        <a href="<?=Url::to(['extend', 'id' => $model->id])?>"><button>Przedłuż</button></a>
-                        <a href="<?=Url::to(['end', 'id' => $model->id])?>"><button>Zakończ</button></a>
-                    </td>
+                    <?php if($returndate < $datetime) { ?>
+                        <td style="border: 1px solid; padding: 15px;">
+                            <a href="<?=Url::to(['cash/pay', 'id' => $model->id])?>"><button>Rozlicz</button></a>
+                        </td>
+                    <?php } else { ?>
+                        <td style="border: 1px solid; padding: 15px;">
+                            <a href="<?=Url::to(['extend', 'id' => $model->id])?>"><button>Przedłuż</button></a>
+                            <a href="<?=Url::to(['end', 'id' => $model->id])?>"><button>Zakończ</button></a>
+                        </td>
+                    <?php } ?>
+                    
                 </tr>
         <?php } ?>
         

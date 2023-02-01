@@ -7,6 +7,7 @@ use backend\models\Books;
 use backend\models\Reader;
 use Yii;
 use DateTime;
+use backend\models\Returns;
 
 class BorrowController extends \yii\web\Controller
 {
@@ -21,30 +22,31 @@ class BorrowController extends \yii\web\Controller
     {
         $borrow = Borrow::findOne(['id' => $id]);
         $return_date = new DateTime($borrow->return_date);
-        $now = new DateTime('now', new \DateTimeZone('UTC'));
 
-        if($return_date < $now) {
-            return $this->render('long-borrow', ['id' => $id]);
-        } else {
-            $return_date->modify("+30 day");
-            $return_date = $return_date->format('Y-m-d H:i:s');
-            $borrow->return_date = $return_date;
-            if($borrow->save(false)) {
-                return $this->redirect(['index']);
-            }   
-        }
+        $return_date->modify("+30 day");
+        $return_date = $return_date->format('Y-m-d H:i:s');
+        $borrow->return_date = $return_date;
+        if($borrow->save(false)) {
+            return $this->redirect(['index']);
+        }   
     }
 
     public function actionEnd($id)
     {
         $borrow = Borrow::findOne(['id' => $id]);
-        $return_date = new DateTime($borrow->return_date);
         $now = new DateTime('now', new \DateTimeZone('UTC'));
+        $dbnow = $now->format('Y-m-d H:i:s');
 
-        if($return_date < $now) {
-            return $this->render('pay-borrow', ['id' => $id]);
-        } else {
-            $borrow->returned = 1;
+        $borrow->returned_date = $dbnow;
+        $borrow->returned = 1;
+
+        $returns = new Returns();
+        $returns->borrow_id = $id;
+        $returns->days = 0;
+        $returns->price = 0;
+        $returns->returned_date = $dbnow;
+
+        if($returns->save(false)) {
             if($borrow->save(false)) {
                 return $this->redirect(['index']);
             }
