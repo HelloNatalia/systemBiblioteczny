@@ -5,31 +5,34 @@ namespace backend\controllers;
 use Yii;
 use yii\web\Controller;
 use backend\models\Books;
+use backend\models\SearchBooks;
+use backend\models\SearchAutors;
 use backend\models\Autors;
 use backend\models\Categories;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
+
 
 class BooksController extends \yii\web\Controller
 {
     public function actionIndex()
     {
         $query = Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id');
-           
-        if($search = Yii::$app->request->get('title')){
-            if($search != '')
-                $query = $this->getSearch($search, 'title');
+        $searchModel = new SearchBooks();
+
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['/books']);
         } 
 
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $models = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+        $searchModel->load($searchModel->getSearchParams());
+        $models = $searchModel->search($query)[0];
+        $pages = $searchModel->search($query)[1];
 
         return $this->render('index', [
             'models' => $models,
             'pages' => $pages,
+            'searchModel' => $searchModel,
         ]);
 
     }
@@ -118,28 +121,43 @@ class BooksController extends \yii\web\Controller
     public function actionAuthors()
     {
         $query = Autors::find();
-           
-        if($search = Yii::$app->request->get('author')){
-            if($search != '')
-                $query = $this->getSearch($search, 'author');
+        $searchModel = new SearchAutors();
+
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['authors']);
         } 
 
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $models = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
+        $searchModel->load($searchModel->getSearchParams());
+        $models = $searchModel->search($query)[0];
+        $pages = $searchModel->search($query)[1];
 
         return $this->render('authors', [
             'models' => $models,
             'pages' => $pages,
+            'searchModel' => $searchModel,
         ]);
     }
 
     public function actionAuthor($id)
     {
-        $models = Books::find()->where('autor_id = ' . $id)->all();
-        return $this->render('author', ['models' => $models, 'id' => $id]);
+        $query = Books::find()->where('autor_id = ' . $id);
+        $searchModel = new SearchBooks();
+
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['author', 'id' => $id]);
+        }
+        $searchModel->load($searchModel->getSearchParams());
+        $models = $searchModel->search($query)[0]; 
+        $pages = $searchModel->search($query)[1];
+
+        return $this->render('author', [
+            'models' => $models,
+            'id' => $id,
+            'searchModel' => $searchModel,
+            'pages' => $pages,
+        ]);
     }
 
 

@@ -2,18 +2,19 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\models\Autors;
-use conquer\select2\Select2Widget;
-use yii\helpers\ArrayHelper;
-use yii\bootstrap5\BootstrapAsset;
-use yii\helpers\Url;
+use yii\jui\DatePicker;
 
+$form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 
-?>
+<?= $form->field($searchModel, 'name')->textInput()?>
+<?= $form->field($searchModel, 'surname')->textInput()?>
+<?= $form->field($searchModel, 'country')->dropdownList([
+    'Poland' => 'Poland',
+    'Germany' => 'Germany',
+    'United Kingdom' => 'United Kingdom'
+], ['prompt' => "Author's country"])?>
 
-<?= Html::beginForm([Url::to('authors')], 'get')?>
+<?= Html::submitButton('Szukaj')?>
+<?= Html::a('Pokaż wszystko', ['authors', 'clear' => 1], ['class' => 'btn btn-primary btn-sm']) ?>
 
-<?= Html::input('text', 'author', '', ['placeholder' => 'Search for author'])?>
-<?= Html::submitButton('filter/clear')?>
-
-<?= Html::endForm() ?>
+<?php ActiveForm::end()?>
