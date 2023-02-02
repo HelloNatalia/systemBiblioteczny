@@ -11,14 +11,33 @@ use yii;
 use yii\DateTime;
 use backend\models\Autors;
 use backend\models\Returns;
+use backend\models\SearchBorrow;
 
 class CashController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['returned' => 0])->andWhere(['<', 'return_date', new Expression('NOW()')])->orderBy(['return_date' => SORT_ASC])->all();
+        $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['returned' => 0])->andWhere(['<', 'return_date', new Expression('NOW()')]);
         $price = Prices::find()->one();
-        return $this->render('index', ['models' => $models, 'price' => $price]);
+        $searchModel = new SearchBorrow();
+
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['/cash']);
+        } 
+
+        if(Yii::$app->request->get('sort')) $sort = Yii::$app->request->get('sort');
+        else $sort = '';
+
+        $searchModel->load($searchModel->getSearchParams());
+        $models = $searchModel->search($models, $sort);
+
+
+        return $this->render('index', [
+            'models' => $models,
+            'price' => $price,
+            'searchModel' => $searchModel,
+        ]);
     }
 
     public function actionPay($id)
@@ -83,7 +102,7 @@ class CashController extends \yii\web\Controller
 
         $new_date = new \DateTime('now', new \DateTimeZone('UTC'));
         $new_date = $new_date->modify("+" . $qdays . " day");
-        $new_date = $new_date->format('Y-m-d H:i:s');
+        $new_date = $new_date->format('Y-m-d 00:00:00');
 
         $borrow->return_date = $new_date;
 
