@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use backend\models\Reader;
 use backend\models\SearchReader;
+use backend\models\SearchBooks;
 use backend\models\Address;
 use backend\models\Borrow;
 
@@ -21,20 +22,36 @@ class ReadersController extends \yii\web\Controller
         }
 
         $searchModel->load($searchModel->getSearchParams());
-        $models = $searchModel->search();
+        $models = $searchModel->search()[0];
+        $pages = $searchModel->search()[1];
 
-        return $this->render('index', ['models' => $models, 'searchModel' => $searchModel]);
+        return $this->render('index', [
+            'models' => $models,
+            'searchModel' => $searchModel,
+            'pages' => $pages,
+        ]);
     }
 
     public function actionReader($id)
     {
         $model = Reader::find()->leftJoin('address', 'reader.address_id = address.id')->where(['reader.id' => $id])->one();
-        $books = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['reader.id' => $model->id])->andWhere(['borrow.returned' => 0])->all();
-        
+        $query = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['reader.id' => $model->id])->andWhere(['borrow.returned' => 0]);
+        $searchModel = new SearchBooks();
+
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['reader', 'id' => $id]);
+        } 
+
+        $searchModel->load($searchModel->getSearchParams());
+        $books = $searchModel->search($query)[0];
+        $pages = $searchModel->search($query)[1];
 
         return $this->render('reader', [
             'model' => $model,
             'books' => $books,
+            'pages' => $pages,
+            'searchModel' => $searchModel,
         ]);
     }
 

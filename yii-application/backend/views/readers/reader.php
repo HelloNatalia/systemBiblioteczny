@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use backend\models\Autors;
 use yii\DateTime;
+use yii\widgets\LinkPager;
 
 ?>
 
@@ -28,6 +29,8 @@ use yii\DateTime;
 
 
 <p><b>Wypożyczone książki: </b></p>
+<?= $this->render('_search_r', ['searchModel' => $searchModel, 'id' => $model->id])?><br>
+
 <?php foreach($books as $book) { 
 
     $author = Autors::find()->where(['id' => $book->book->autor_id])->one(); 
@@ -51,3 +54,7 @@ use yii\DateTime;
         <p><b>Zostało: <?=$days?> dni</b></p>
     </div><br>
 <?php } ?>
+
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>

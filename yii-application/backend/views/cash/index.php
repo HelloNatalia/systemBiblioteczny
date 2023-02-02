@@ -4,6 +4,7 @@
 use yii\helpers\Url;
 use yii\DateTime;
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
 
 $totalincome = 0;
 
@@ -68,3 +69,7 @@ foreach($models as $model) {
         <?php } ?>
         
     </table>
+
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>

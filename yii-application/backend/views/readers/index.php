@@ -1,6 +1,8 @@
 <?php
 /** @var yii\web\View $this */
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
+
 ?>
 <h2>Czytelnicy</h2>
 <br>
@@ -15,3 +17,6 @@ use yii\helpers\Url;
 </a><br>
 <?php } ?>
 
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>

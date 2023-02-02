@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\DateTime;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
 
 ?>
 
@@ -57,4 +58,8 @@ use yii\widgets\ActiveForm;
         <?php } ?>
         
     </table>
+
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>
 

@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\data\Pagination;
 
 /**
  * This is the model class for table "reader".
@@ -107,19 +108,18 @@ class SearchReader extends \yii\db\ActiveRecord
 
     public function search()
     {
-        $models = Reader::find()
+        $query = Reader::find()
                         ->orderBy(['surname' => SORT_ASC])
                         ->andFilterWhere(['id' => $this->id])
                         ->andFilterWhere(['like', 'name', $this->name])
-                        ->andFilterWhere(['like', 'surname', $this->surname])
-                        ->all();
-        // $models = $models
-        //             ->andFilterWhere(['borrow.id' => $this->id])
-        //             ->andFilterWhere(['borrow.reader_id' => $this->reader_id])
-        //             ->andFilterWhere(['borrow.book_id' => $this->book_id])
-        //             ->andFilterWhere(['like', 'borrow.date_time', $this->date_time])
-        //             ->andFilterWhere(['like', 'borrow.return_date', $this->return_date])
-        //             ->all();
-        return $models;
+                        ->andFilterWhere(['like', 'surname', $this->surname]);
+                        
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
+
+        return [$models, $pages];
     }
 }

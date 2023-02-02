@@ -16,7 +16,7 @@ class BorrowController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['returned' => 0]);
+        $query = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['returned' => 0]);
         $searchModel = new SearchBorrow();
 
         if(Yii::$app->request->get('clear') == 1) {
@@ -28,10 +28,12 @@ class BorrowController extends \yii\web\Controller
         else $sort = '';
 
         $searchModel->load($searchModel->getSearchParams());
-        $models = $searchModel->search($models, $sort);
+        $models = $searchModel->search($query, $sort)[0];
+        $pages = $searchModel->search($query, $sort)[1];
 
         return $this->render('index', [
             'models' => $models,
+            'pages' => $pages,
             'searchModel' => $searchModel,
         ]);
     }
