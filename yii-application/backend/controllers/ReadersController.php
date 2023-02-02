@@ -46,6 +46,11 @@ class ReadersController extends \yii\web\Controller
         if($reader->load(Yii::$app->request->post()) && $address->load(Yii::$app->request->post()))
         {
             $ifexists = Reader::find()->where(['like', 'PESEL', $reader->PESEL, false])->one();
+
+            $postal_code = (string) $address->postal_code;
+            $postal_code = substr($postal_code, 0, 2) . "-" . substr($postal_code, 2);
+            $address->postal_code = $postal_code;
+
             if($ifexists){
                 return $this->render('create', ['reader' => $reader, 'address' => $address, 'exists_info' => 'Czytelnik o takim numerze PESEL jest już zarejestrowany']);
             }
@@ -64,10 +69,16 @@ class ReadersController extends \yii\web\Controller
     {
         $reader = Reader::findOne(['id' => $id]);
         $address = Address::findOne(['id' => $reader->address_id]);
+        $address->postal_code = (int) str_replace("-", "", $address->postal_code);
 
         if($reader->load(Yii::$app->request->post()) && $address->load(Yii::$app->request->post()))
         {
             $pesel = Reader::findOne(['id' => $id]);
+
+            $postal_code = (string) $address->postal_code;
+            $postal_code = substr($postal_code, 0, 2) . "-" . substr($postal_code, 2);
+            $address->postal_code = $postal_code;
+
             if($reader->PESEL == $pesel->PESEL){
                 $ifexists = false;
             }

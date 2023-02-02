@@ -23,7 +23,7 @@ use yii\DateTime;
 <br><br>
 
 <p><b>Adres:</b></p>
-<p><?=$model->address->street?> <?=$model->address->home?>/<?=$model->address->number?></p>
+<p><?=$model->address->street?> <?=$model->address->home?><?php if($model->address->number) echo '/' . $model->address->number; ?></p>
 <p><?=$model->address->postal_code?> <?=$model->address->city?> <?=$model->address->country?></p><br><br>
 
 
