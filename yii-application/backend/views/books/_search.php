@@ -2,20 +2,21 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\models\Autors;
-use conquer\select2\Select2Widget;
-use yii\helpers\ArrayHelper;
-use yii\bootstrap5\BootstrapAsset;
-use yii\helpers\Url;
+use yii\jui\DatePicker;
+
+$form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
+
+<?= $form->field($searchModel, 'id')->textInput(['type' => 'number'])?>
+<?= $form->field($searchModel, 'title')->textInput()?>
+<?= $form->field($searchModel, 'publ_year')->textInput(['type' => 'number'])?>
+
+<?= Html::submitButton('Szukaj')?>
+<?= Html::a('Pokaż wszystko', ['index', 'clear' => 1], ['class' => 'btn btn-primary btn-sm']) ?>
+<p>
+    <b>Ilość w bibliotece: </b>
+    <?= Html::a('&#129169;', ['index', 'sort' => 'asc'], ['class' => 'btn btn-primary btn-sm']) ?> 
+    <?= Html::a('&#129171;', ['index', 'sort' => 'desc'], ['class' => 'btn btn-primary btn-sm']) ?>
+</p>
 
 
-?>
-
-<?= Html::beginForm([Url::to('index')], 'get')?>
-
-<?= Html::input('text', 'title', '', ['placeholder' => 'Search for title'])?>
-<?= Html::submitButton('filter/clear')?>
- <?php // Html::a('A-Z', ['index', 'order' => 'asc'])?>
- <?php // Html::a('Z-A', ['index', 'order' => 'desc'])?>
-
-<?= Html::endForm() ?>
+<?php ActiveForm::end()?>

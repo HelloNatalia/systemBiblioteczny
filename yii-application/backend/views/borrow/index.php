@@ -4,10 +4,13 @@ use yii\helpers\Url;
 use yii\DateTime;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\widgets\LinkPager;
 
 ?>
 
 <h2>Wypożyczenia: </h2><br>
+
+<?= $this->render('_search', ['searchModel' => $searchModel])?><br>
 
 <a href="<?=Url::to(['create', 'id' => ''])?>"><button>Dodaj</button></a>
 <br><br>
@@ -15,8 +18,14 @@ use yii\widgets\ActiveForm;
     <table style="border: 1px solid;">
         <tr style="border: 1px solid;">
             <th style="border: 1px solid; padding: 15px;">ID wypożyczenia</th>
-            <th style="border: 1px solid; padding: 15px;">Data wypożyczenia</th>
-            <th style="border: 1px solid; padding: 15px;">Data zwrotu</th>
+            <th style="border: 1px solid; padding: 15px;">
+                Data wypożyczenia <?= Html::a('&#129169;', ['index', 'sort' => 'd1asc'], ['class' => 'btn btn-primary btn-sm']) ?> 
+                                    <?= Html::a('&#129171;', ['index', 'sort' => 'd1desc'], ['class' => 'btn btn-primary btn-sm']) ?>
+            </th>
+            <th style="border: 1px solid; padding: 15px;">
+                Data zwrotu <?= Html::a('&#129169;', ['index', 'sort' => 'd2asc'], ['class' => 'btn btn-primary btn-sm']) ?> 
+                                    <?= Html::a('&#129171;', ['index', 'sort' => 'd2desc'], ['class' => 'btn btn-primary btn-sm']) ?>
+            </th>
             <th style="border: 1px solid; padding: 15px;">Czytelnik</th>
             <th style="border: 1px solid; padding: 15px;">Książka</th>
             <th style="border: 1px solid; padding: 15px;"></th>
@@ -49,4 +58,8 @@ use yii\widgets\ActiveForm;
         <?php } ?>
         
     </table>
+
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>
 

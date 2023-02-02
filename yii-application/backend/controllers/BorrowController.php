@@ -8,6 +8,7 @@ use backend\models\Books;
 use backend\models\Reader;
 use backend\models\Autors;
 use backend\models\Days;
+use backend\models\SearchBorrow;
 use DateTime;
 use backend\models\Returns;
 
@@ -15,9 +16,26 @@ class BorrowController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->where(['returned' => 0])->orderBy(['return_date' => SORT_ASC])->all();
+        $query = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['returned' => 0]);
+        $searchModel = new SearchBorrow();
 
-        return $this->render('index', ['models' => $models]);
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['/borrow']);
+        } 
+
+        if(Yii::$app->request->get('sort')) $sort = Yii::$app->request->get('sort');
+        else $sort = '';
+
+        $searchModel->load($searchModel->getSearchParams());
+        $models = $searchModel->search($query, $sort)[0];
+        $pages = $searchModel->search($query, $sort)[1];
+
+        return $this->render('index', [
+            'models' => $models,
+            'pages' => $pages,
+            'searchModel' => $searchModel,
+        ]);
     }
 
     public function actionExtendDays($id)
@@ -37,7 +55,7 @@ class BorrowController extends \yii\web\Controller
         $return_date = new DateTime($borrow->return_date);
 
         $return_date->modify("+" . $days . " day");
-        $return_date = $return_date->format('Y-m-d H:i:s');
+        $return_date = $return_date->format('Y-m-d 00:00:00');
         $borrow->return_date = $return_date;
         if($borrow->save(false)) {
             return $this->redirect(['index']);
@@ -99,7 +117,7 @@ class BorrowController extends \yii\web\Controller
 
             $returndate = new DateTime('now', new \DateTimeZone('UTC'));
             $returndate = $returndate->modify("+" . $days->quantity . " day");
-            $returndate = $returndate->format('Y-m-d H:i:s');
+            $returndate = $returndate->format('Y-m-d 00:00:00');
 
             $borrow->date_time = $dbnow;
             $borrow->return_date = $returndate;

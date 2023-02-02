@@ -33,10 +33,10 @@ class Address extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['street', 'home', 'number', 'postal_code', 'city', 'country'], 'required'],
+            [['street', 'home', 'postal_code', 'city', 'country'], 'required'],
             [['street'], 'string', 'max' => 150],
             [['home', 'number'], 'string', 'max' => 5],
-            [['postal_code'], 'string', 'max' => 10],
+            [['postal_code'], 'string', 'max' => 5],
             [['city', 'country'], 'string', 'max' => 100],
         ];
     }

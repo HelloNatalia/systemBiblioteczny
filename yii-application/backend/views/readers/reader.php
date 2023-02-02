@@ -4,6 +4,7 @@ use yii\helpers\Url;
 use yii\helpers\Html;
 use backend\models\Autors;
 use yii\DateTime;
+use yii\widgets\LinkPager;
 
 ?>
 
@@ -23,11 +24,13 @@ use yii\DateTime;
 <br><br>
 
 <p><b>Adres:</b></p>
-<p><?=$model->address->street?> <?=$model->address->home?>/<?=$model->address->number?></p>
+<p><?=$model->address->street?> <?=$model->address->home?><?php if($model->address->number) echo '/' . $model->address->number; ?></p>
 <p><?=$model->address->postal_code?> <?=$model->address->city?> <?=$model->address->country?></p><br><br>
 
 
 <p><b>Wypożyczone książki: </b></p>
+<?= $this->render('_search_r', ['searchModel' => $searchModel, 'id' => $model->id])?><br>
+
 <?php foreach($books as $book) { 
 
     $author = Autors::find()->where(['id' => $book->book->autor_id])->one(); 
@@ -51,3 +54,7 @@ use yii\DateTime;
         <p><b>Zostało: <?=$days?> dni</b></p>
     </div><br>
 <?php } ?>
+
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>

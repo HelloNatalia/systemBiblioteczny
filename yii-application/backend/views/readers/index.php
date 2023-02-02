@@ -1,9 +1,13 @@
 <?php
 /** @var yii\web\View $this */
 use yii\helpers\Url;
+use yii\widgets\LinkPager;
+
 ?>
 <h2>Czytelnicy</h2>
 <br>
+
+<?= $this->render('_search', ['searchModel' => $searchModel])?><br>
 
 <a href="<?=Url::to(['create'])?>"><button>Add new reader</button></a><br>
 
@@ -13,3 +17,6 @@ use yii\helpers\Url;
 </a><br>
 <?php } ?>
 
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>

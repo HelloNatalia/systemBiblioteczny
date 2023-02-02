@@ -2,12 +2,15 @@
 use backend\models\Books;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\widgets\LinkPager;
 
 $author = Books::find()->leftJoin('autors', 'autors.id = books.autor_id')->where('autor_id = ' . $id)->one();
 
 echo $this->render('_submenubook')?>
 
 <h3>Books written by <?= $author->autor->name?> <?= $author->autor->surname?></h3>
+
+<?= $this->render('_searchtitle_a', ['searchModel' => $searchModel, 'author' => $author])?>
 
 <?php foreach($models as $model) { ?>
 
@@ -22,5 +25,9 @@ echo $this->render('_submenubook')?>
 </div>
 
 <?php } ?>
+
+<?php echo LinkPager::widget([
+    'pagination' => $pages,
+]); ?>
 
 
