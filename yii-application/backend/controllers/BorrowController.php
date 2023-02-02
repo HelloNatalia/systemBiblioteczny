@@ -8,6 +8,7 @@ use backend\models\Books;
 use backend\models\Reader;
 use backend\models\Autors;
 use backend\models\Days;
+use backend\models\SearchBorrow;
 use DateTime;
 use backend\models\Returns;
 
@@ -15,9 +16,26 @@ class BorrowController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->where(['returned' => 0])->orderBy(['return_date' => SORT_ASC])->all();
+        // ->orderBy(['return_date' => SORT_ASC])
+        $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['returned' => 0]);
+        $searchModel = new SearchBorrow();
 
-        return $this->render('index', ['models' => $models]);
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['/borrow']);
+        } 
+        if(Yii::$app->request->get('d1sort') == 1) $models = $models->orderBy(['date_time' => SORT_ASC]);
+        else if(Yii::$app->request->get('d2sort') == 1) $models = $models->orderBy(['return_date' => SORT_ASC]);
+        else if(Yii::$app->request->get('d2sort') == 0 || !Yii::$app->request->get('d2sort')) $models = $models->orderBy(['return_date' => SORT_DESC]);
+        else if(Yii::$app->request->get('d1sort') == 0 || !Yii::$app->request->get('d1sort')) $models = $models->orderBy(['date_time' => SORT_DESC]);
+
+        $searchModel->load($searchModel->getSearchParams());
+        $models = $searchModel->search($models);
+
+        return $this->render('index', [
+            'models' => $models,
+            'searchModel' => $searchModel,
+        ]);
     }
 
     public function actionExtendDays($id)
