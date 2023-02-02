@@ -18,12 +18,12 @@ use yii\widgets\ActiveForm;
         <tr style="border: 1px solid;">
             <th style="border: 1px solid; padding: 15px;">ID wypożyczenia</th>
             <th style="border: 1px solid; padding: 15px;">
-                Data wypożyczenia <?= Html::a('&#129169;', ['index', 'd1sort' => 1], ['class' => 'btn btn-primary btn-sm']) ?> 
-                                    <?= Html::a('&#129171;', ['index', 'd1sort' => 0], ['class' => 'btn btn-primary btn-sm']) ?>
+                Data wypożyczenia <?= Html::a('&#129169;', ['index', 'sort' => 'd1asc'], ['class' => 'btn btn-primary btn-sm']) ?> 
+                                    <?= Html::a('&#129171;', ['index', 'sort' => 'd1desc'], ['class' => 'btn btn-primary btn-sm']) ?>
             </th>
             <th style="border: 1px solid; padding: 15px;">
-                Data zwrotu <?= Html::a('&#129169;', ['index', 'd2sort' => 1], ['class' => 'btn btn-primary btn-sm']) ?> 
-                                    <?= Html::a('&#129171;', ['index', 'd2sort' => 0], ['class' => 'btn btn-primary btn-sm']) ?>
+                Data zwrotu <?= Html::a('&#129169;', ['index', 'sort' => 'd2asc'], ['class' => 'btn btn-primary btn-sm']) ?> 
+                                    <?= Html::a('&#129171;', ['index', 'sort' => 'd2desc'], ['class' => 'btn btn-primary btn-sm']) ?>
             </th>
             <th style="border: 1px solid; padding: 15px;">Czytelnik</th>
             <th style="border: 1px solid; padding: 15px;">Książka</th>

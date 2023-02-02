@@ -23,13 +23,15 @@ class BorrowController extends \yii\web\Controller
             $searchModel->clearSearchParams();
             return $this->redirect(['/borrow']);
         } 
-        if(Yii::$app->request->get('d1sort') == 1) $models = $models->orderBy(['date_time' => SORT_ASC]);
-        else if(Yii::$app->request->get('d2sort') == 1) $models = $models->orderBy(['return_date' => SORT_ASC]);
-        else if(Yii::$app->request->get('d2sort') == 0 || !Yii::$app->request->get('d2sort')) $models = $models->orderBy(['return_date' => SORT_DESC]);
-        else if(Yii::$app->request->get('d1sort') == 0 || !Yii::$app->request->get('d1sort')) $models = $models->orderBy(['date_time' => SORT_DESC]);
+        // if(Yii::$app->request->get('d1sort') == 1) $models = $models->orderBy(['date_time' => SORT_ASC]);
+        // else if(Yii::$app->request->get('d1sort') == 0 || !Yii::$app->request->get('d1sort')) $models = $models->orderBy(['date_time' => SORT_DESC]);
+        // if(Yii::$app->request->get('d2sort') == 1) $models = $models->orderBy(['return_date' => SORT_ASC]);
+        // else if(Yii::$app->request->get('d2sort') == 0 || !Yii::$app->request->get('d2sort')) $models = $models->orderBy(['return_date' => SORT_DESC]);
+        if(Yii::$app->request->get('sort')) $sort = Yii::$app->request->get('sort');
+        else $sort = '';
 
         $searchModel->load($searchModel->getSearchParams());
-        $models = $searchModel->search($models);
+        $models = $searchModel->search($models, $sort);
 
         return $this->render('index', [
             'models' => $models,

@@ -93,15 +93,19 @@ class SearchBorrow extends \yii\db\ActiveRecord
         Yii::$app->session->remove('SearchBorrow');
     }
 
-    public function search($models)
+    public function search($models, $sort)
     {
         $models = $models
                     ->andFilterWhere(['borrow.id' => $this->id])
                     ->andFilterWhere(['borrow.reader_id' => $this->reader_id])
                     ->andFilterWhere(['borrow.book_id' => $this->book_id])
                     ->andFilterWhere(['like', 'borrow.date_time', $this->date_time])
-                    ->andFilterWhere(['like', 'borrow.return_date', $this->return_date])
-                    ->all();
+                    ->andFilterWhere(['like', 'borrow.return_date', $this->return_date]);
+        if($sort == 'd1asc') $models = $models->orderBy(['date_time' => SORT_ASC])->all();
+        else if($sort == 'd1desc') $models = $models->orderBy(['date_time' => SORT_DESC])->all();
+        else if($sort == 'd2asc') $models = $models->orderBy(['return_date' => SORT_ASC])->all();
+        else if($sort == 'd2desc') $models = $models->orderBy(['return_date' => SORT_DESC])->all();
+        else $models = $models->all();
         return $models;
     }
 }
