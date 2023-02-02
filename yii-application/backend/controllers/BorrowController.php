@@ -16,7 +16,6 @@ class BorrowController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        // ->orderBy(['return_date' => SORT_ASC])
         $models = Borrow::find()->leftJoin('reader', 'reader.id = borrow.reader_id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['returned' => 0]);
         $searchModel = new SearchBorrow();
 

@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Reader;
+use backend\models\SearchReader;
 use backend\models\Address;
 use backend\models\Borrow;
 
@@ -12,9 +13,17 @@ class ReadersController extends \yii\web\Controller
 {
     public function actionIndex()
     {
-        $models = Reader::find()->orderBy(['surname' => SORT_ASC])->all();
+        $searchModel = new SearchReader();
 
-        return $this->render('index', ['models' => $models]);
+        if(Yii::$app->request->get('clear') == 1) {
+            $searchModel->clearSearchParams();
+            return $this->redirect(['/readers']);
+        }
+
+        $searchModel->load($searchModel->getSearchParams());
+        $models = $searchModel->search();
+
+        return $this->render('index', ['models' => $models, 'searchModel' => $searchModel]);
     }
 
     public function actionReader($id)

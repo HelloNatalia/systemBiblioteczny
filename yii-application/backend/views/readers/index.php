@@ -5,6 +5,8 @@ use yii\helpers\Url;
 <h2>Czytelnicy</h2>
 <br>
 
+<?= $this->render('_search', ['searchModel' => $searchModel])?><br>
+
 <a href="<?=Url::to(['create'])?>"><button>Add new reader</button></a><br>
 
 <?php foreach ($models as $model) { ?>
