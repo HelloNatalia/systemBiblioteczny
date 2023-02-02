@@ -116,12 +116,15 @@ class SearchBooks extends \yii\db\ActiveRecord
         Yii::$app->session->remove('SearchBooks');
     }
 
-    public function search($query)
+    public function search($query, $q_sort)
     {
         $query = $query
                     ->andFilterWhere(['books.id' => $this->id])
                     ->andFilterWhere(['like', 'books.title', $this->title])
                     ->andFilterWhere(['publ_year' => $this->publ_year]);
+
+        if($q_sort == 'asc') $query = $query->orderBy(['quantity' => SORT_ASC]);
+        else if($q_sort == 'desc') $query = $query->orderBy(['quantity' => SORT_DESC]);
 
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);

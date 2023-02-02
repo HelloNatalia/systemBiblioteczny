@@ -25,9 +25,12 @@ class BooksController extends \yii\web\Controller
             return $this->redirect(['/books']);
         } 
 
+        if(Yii::$app->request->get('sort')) $sort = Yii::$app->request->get('sort');
+        else $sort = '';
+
         $searchModel->load($searchModel->getSearchParams());
-        $models = $searchModel->search($query)[0];
-        $pages = $searchModel->search($query)[1];
+        $models = $searchModel->search($query, $sort)[0];
+        $pages = $searchModel->search($query, $sort)[1];
 
         return $this->render('index', [
             'models' => $models,
@@ -149,8 +152,8 @@ class BooksController extends \yii\web\Controller
             return $this->redirect(['author', 'id' => $id]);
         }
         $searchModel->load($searchModel->getSearchParams());
-        $models = $searchModel->search($query)[0]; 
-        $pages = $searchModel->search($query)[1];
+        $models = $searchModel->search($query, '')[0]; 
+        $pages = $searchModel->search($query, '')[1];
 
         return $this->render('author', [
             'models' => $models,

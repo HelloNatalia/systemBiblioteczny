@@ -44,8 +44,8 @@ class ReadersController extends \yii\web\Controller
         } 
 
         $searchModel->load($searchModel->getSearchParams());
-        $books = $searchModel->search($query)[0];
-        $pages = $searchModel->search($query)[1];
+        $books = $searchModel->search($query, '')[0];
+        $pages = $searchModel->search($query, '')[1];
 
         return $this->render('reader', [
             'model' => $model,
