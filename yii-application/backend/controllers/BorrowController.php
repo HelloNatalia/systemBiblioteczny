@@ -87,7 +87,7 @@ class BorrowController extends \yii\web\Controller
         }
     }
 
-    public function actionCreate($id)
+    public function actionCreate($id, $reader)
     {
         $borrow = new Borrow();
         $days = new Days();
@@ -96,7 +96,11 @@ class BorrowController extends \yii\web\Controller
             if(Books::find()->andWhere(['id' => $id])->andWhere(['>', 'quantity', 0])->one()){
                 $borrow->book_id = $id;
             }   
-        }
+        } else if ($reader != ''){
+            if(Borrow::find()->where(['id' => $reader])->one()){
+                $borrow->reader_id = $reader;
+            }
+        }   
 
         $b_items = array();
         $books = Books::find()->leftJoin('autors', 'autors.id = books.autor_id')->where(['>', 'quantity', 0])->all();

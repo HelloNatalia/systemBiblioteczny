@@ -42,7 +42,7 @@ use yii\widgets\LinkPager;
             <a href="<?=Url::to(['update', 'id' => $model->id])?>"><button>Edit</button></a>
             <a href="<?= Url::to(['delete-view', 'id' => $model->id])?>"><button>Delete</button></a>
             <?php if($model->quantity > 0) { ?>
-                <a href="<?= Url::to(['borrow/create', 'id' => $model->id])?>"><button>Wypożycz</button></a>
+                <a href="<?= Url::to(['borrow/create', 'id' => $model->id, 'reader' => ''])?>"><button>Wypożycz</button></a>
             <?php } ?>
         </div>
         <br><br>

@@ -12,7 +12,7 @@ use yii\widgets\LinkPager;
 
 <?= $this->render('_search', ['searchModel' => $searchModel])?><br>
 
-<a href="<?=Url::to(['create', 'id' => ''])?>"><button>Dodaj</button></a>
+<a href="<?=Url::to(['create', 'id' => '', 'reader' => ''])?>"><button>Dodaj</button></a>
 <br><br>
 
     <table style="border: 1px solid;">

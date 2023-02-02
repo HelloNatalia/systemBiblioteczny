@@ -26,8 +26,8 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 <?= $form->field($reader, 'tel_number')->textInput(['type' => 'number'])?>
 
 <?= $form->field($address, 'street')->textInput() ?>
-<?= $form->field($address, 'home')->textInput(['type' => 'number'])?>
-<?= $form->field($address, 'number')->textInput(['type' => 'number'])?>
+<?= $form->field($address, 'home')->textInput()?>
+<?= $form->field($address, 'number')->textInput()?>
 <?= $form->field($address, 'postal_code')->textInput(['type' => 'number', 'placeholder' => 'XXXXX']) ?>
 <?= $form->field($address, 'city')->textInput() ?>
 <?= $form->field($address, 'country')->textInput() ?>

@@ -13,6 +13,7 @@ use yii\widgets\LinkPager;
 
 <a href="<?=Url::to(['update', 'id' => $model->id])?>"><button>Update</button></a>
 <a href="<?=Url::to(['delete-view', 'id' => $model->id])?>"><button>Delete</button></a>
+<a href="<?=Url::to(['borrow/create', 'id' => '', 'reader' => $model->id])?>"><button>Wypożycz</button></a>
 
 
 <p><b>ID: </b><?=$model->id?></p>
