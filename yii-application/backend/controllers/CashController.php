@@ -107,6 +107,7 @@ class CashController extends \yii\web\Controller
         $new_date = $new_date->format('Y-m-d 00:00:00');
 
         $borrow->return_date = $new_date;
+        $borrow->extend_quantity += 1;
 
         $returns = new Returns();
         $returns->borrow_id = $id;
