@@ -57,6 +57,9 @@ class BorrowController extends \yii\web\Controller
         $return_date->modify("+" . $days . " day");
         $return_date = $return_date->format('Y-m-d 00:00:00');
         $borrow->return_date = $return_date;
+        
+        $borrow->extend_quantity += 1;
+        
         if($borrow->save(false)) {
             return $this->redirect(['index']);
         }   
@@ -116,6 +119,15 @@ class BorrowController extends \yii\web\Controller
 
         if($borrow->load(Yii::$app->request->post()) && $days->load(Yii::$app->request->post())) {
 
+            if(count(Borrow::find()->andWhere(['reader_id' => $borrow->reader_id])->andWhere(['returned' => 0])->all()) >= 5) {
+                return $this->render('create', ['borrow' => $borrow, 
+                'info' => 'Czytelnik ma już 5 wypożyczonych książek.', 
+                'b_items' => $b_items, 
+                'r_items' => $r_items,
+                'days' => $days,
+            ]);
+            }
+
             $now = new DateTime('now', new \DateTimeZone('UTC'));
             $dbnow = $now->format('Y-m-d H:i:s');
 
@@ -126,6 +138,8 @@ class BorrowController extends \yii\web\Controller
             $borrow->date_time = $dbnow;
             $borrow->return_date = $returndate;
             $borrow->returned = 0;
+
+            $borrow->extend_quantity = 0;
 
             if($borrow->save(false)) {
                 return $this->redirect(['created-borrow', 'id' => $borrow->id]);

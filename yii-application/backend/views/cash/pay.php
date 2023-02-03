@@ -18,11 +18,14 @@ use yii\widgets\ActiveForm;
 <p><b>Ilość przetrzymanych dni: </b> <?=$days?></p>
 <h3><b>Do zwrotu: </b> <?=$pricetopay?> zł</h3><br><br>
 
-<p><b>Na ile dni przedłużyć?</b></p>
-<?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
-<?= $form->field($qdays, 'quantity')->textInput(['type' => 'number', 'value' => 30])?>
-<?= Html::submitButton('Przedłuż')?>
-<?php ActiveForm::end()?>
+<?php if($model->extend_quantity >= 2) { ?> 
+    <p>Nie można już więcej przedłużyć.</p>
+<?php } else { ?>
+    <p><b>Na ile dni przedłużyć?</b></p>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
+    <?= $form->field($qdays, 'quantity')->textInput(['type' => 'number', 'value' => 30])?>
+    <?= Html::submitButton('Przedłuż')?>
+    <?php ActiveForm::end()?>
+<?php } ?>
 
-<!-- <a href="<?=Url::to(['pay-extend', 'id' => $model->id, 'days' => $days, 'price' => $pricetopay])?>"><button>Przedłuż wypożyczenie</button></a> -->
 <a href="<?=Url::to(['pay-end', 'id' => $model->id, 'days' => $days, 'price' => $pricetopay])?>"><button>Zakończ wypożyczenie</button></a>

@@ -34,9 +34,11 @@ use yii\widgets\LinkPager;
 
 <?php foreach($books as $book) { 
 
-    $author = Autors::find()->where(['id' => $book->book->autor_id])->one(); 
+    $author = Autors::find()->where(['id' => $book->book->autor_id])->one();
+    $now = new \DateTime('now', new \DateTimeZone('UTC'));
     $borrow_date = new \DateTime($book->date_time);
     $return_date = new \DateTime($book->return_date);
+    $left = (date_diff($return_date, $now))->format('%a');
     $days = (date_diff($return_date, $borrow_date));
     $days = $days->format('%a'); 
     $borrow_date = $borrow_date->format('Y-m-d');
@@ -53,9 +55,23 @@ use yii\widgets\LinkPager;
         </div>
         <p><?=$borrow_date?> - <?=$return_date?></p>
         <p><b>Zostało: <?=$days?> dni</b></p>
+
+        <?php if($book->extend_quantity >= 2) { ?>
+            <button disabled="disabled">Przedłuż</button>
+            <small>Nie można już przedłużyć</small>
+        <?php } else if ($left > 14) { ?>
+            <button disabled="disabled">Przedłuż</button>
+            <small>Możliwość przedłużenia za <?=$left?> dni</small>
+        <?php } else { ?>
+            <a href="<?=Url::to(['borrow/extend-days', 'id' => $book->id])?>"><button>Przedłuż</button></a>
+        <?php } ?>
+        <a href="<?=Url::to(['borrow/end', 'id' => $book->id])?>"><button>Zakończ</button></a>
+        <br><br>
     </div><br>
 <?php } ?>
+
 
 <?php echo LinkPager::widget([
     'pagination' => $pages,
 ]); ?>
+

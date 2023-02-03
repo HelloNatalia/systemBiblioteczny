@@ -5,6 +5,7 @@ use yii\DateTime;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
+use backend\models\Borrow;
 
 ?>
 
@@ -49,7 +50,16 @@ use yii\widgets\LinkPager;
                         </td>
                     <?php } else { ?>
                         <td style="border: 1px solid; padding: 15px;">
-                            <a href="<?=Url::to(['extend-days', 'id' => $model->id])?>"><button>Przedłuż</button></a>
+                            <?php if($model->extend_quantity >= 2) { ?>
+                                <button disabled="disabled">Przedłuż</button>
+                                <small>Nie można już przedłużyć</small>
+                            <?php } else if (((date_diff($returndate, $datetime))->format('%a')) > 14) { 
+                                $left = (date_diff($returndate, $datetime))->format('%a'); ?>
+                                <button disabled="disabled">Przedłuż</button>
+                                <small>Możliwość przedłużenia za <?=$left?> dni</small>
+                            <?php } else { ?>
+                                <a href="<?=Url::to(['extend-days', 'id' => $model->id])?>"><button>Przedłuż</button></a>
+                            <?php } ?>
                             <a href="<?=Url::to(['end', 'id' => $model->id])?>"><button>Zakończ</button></a>
                         </td>
                     <?php } ?>
