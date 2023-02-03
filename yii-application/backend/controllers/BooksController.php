@@ -4,13 +4,12 @@ namespace backend\controllers;
 
 use Yii;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 use backend\models\Books;
 use backend\models\SearchBooks;
 use backend\models\SearchAutors;
 use backend\models\Autors;
 use backend\models\Categories;
-use yii\web\UploadedFile;
-use yii\data\Pagination;
 
 
 class BooksController extends \yii\web\Controller
