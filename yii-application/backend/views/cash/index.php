@@ -6,19 +6,6 @@ use yii\DateTime;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
-$totalincome = 0;
-
-foreach($models as $model) {
-
-    $datetime = new \DateTime('now', new \DateTimeZone('UTC'));
-    $returndate = new \DateTime($model->return_date);
-    $days = (date_diff($datetime, $returndate));
-    $days = $days->format('%a'); 
-    $pricetopay = $days * $price->priceperday;
-
-    $totalincome += $pricetopay;
-}
-
 ?>
 
 
@@ -49,6 +36,7 @@ foreach($models as $model) {
         <?php foreach($models as $model) {
 
             $datetime = new \DateTime('now', new \DateTimeZone('UTC'));
+            $datetime = new \DateTime($datetime ->format('Y-m-d 23:59:00')); 
             $returndate = new \DateTime($model->return_date);
             $days = (date_diff($datetime, $returndate));
             $days = $days->format('%a'); 

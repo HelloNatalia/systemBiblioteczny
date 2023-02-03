@@ -95,4 +95,14 @@ class Books extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Categories::class, ['id' => 'category_id']);
     }
+
+    public function booksArray()
+    {
+        $b_items = array();
+        $books = $this->find()->leftJoin('autors', 'autors.id = books.autor_id')->where(['>', 'quantity', 0])->all();
+        foreach($books as $book) {
+            $b_items[$book->id] = $book->id . ' - ' . $book->title . ' - ' . $book->autor->name . ' ' . $book->autor->surname . ' - sztuk: ' . $book->quantity;
+        }
+        return $b_items;
+    }
 }

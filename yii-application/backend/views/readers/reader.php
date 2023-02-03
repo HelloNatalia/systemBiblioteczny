@@ -36,8 +36,12 @@ use yii\widgets\LinkPager;
 
     $author = Autors::find()->where(['id' => $book->book->autor_id])->one();
     $now = new \DateTime('now', new \DateTimeZone('UTC'));
+    $now = new \DateTime($now ->format('Y-m-d 23:59:00'));
+    $book->date_time = substr($book->date_time, 0, 11) . '23:59:00';
     $borrow_date = new \DateTime($book->date_time);
     $return_date = new \DateTime($book->return_date);
+    if($now > $return_date) $after_date = true;
+    else $after_date = false;
     $left = (date_diff($return_date, $now))->format('%a');
     $days = (date_diff($return_date, $borrow_date));
     $days = $days->format('%a'); 
@@ -54,18 +58,23 @@ use yii\widgets\LinkPager;
             <p><?=$author->name?> <?=$author->surname?></p>
         </div>
         <p><?=$borrow_date?> - <?=$return_date?></p>
-        <p><b>Zostało: <?=$days?> dni</b></p>
 
-        <?php if($book->extend_quantity >= 2) { ?>
-            <button disabled="disabled">Przedłuż</button>
-            <small>Nie można już przedłużyć</small>
-        <?php } else if ($left > 14) { ?>
-            <button disabled="disabled">Przedłuż</button>
-            <small>Możliwość przedłużenia za <?=$left?> dni</small>
+        <?php if($after_date) { ?>
+            <p><b>Po terminie: <?=$left?> dni</b></p>
+            <a href="<?=Url::to(['cash/pay', 'id' => $book->id])?>"><button>Rozlicz</button></a>
         <?php } else { ?>
-            <a href="<?=Url::to(['borrow/extend-days', 'id' => $book->id])?>"><button>Przedłuż</button></a>
+            <p><b>Zostało: <?=$days?> dni</b></p>
+            <?php if($book->extend_quantity >= 2) { ?>
+                <button disabled="disabled">Przedłuż</button>
+                <small>Nie można już przedłużyć</small>
+            <?php } else if ($left > 14) { ?>
+                <button disabled="disabled">Przedłuż</button>
+                <small>Możliwość przedłużenia za <?=$left?> dni</small>
+            <?php } else { ?>
+                <a href="<?=Url::to(['borrow/extend-days', 'id' => $book->id])?>"><button>Przedłuż</button></a>
+            <?php } ?>
+            <a href="<?=Url::to(['borrow/end', 'id' => $book->id, 'days' => 0, 'price' => 0])?>"><button>Zakończ</button></a>
         <?php } ?>
-        <a href="<?=Url::to(['borrow/end', 'id' => $book->id])?>"><button>Zakończ</button></a>
         <br><br>
     </div><br>
 <?php } ?>

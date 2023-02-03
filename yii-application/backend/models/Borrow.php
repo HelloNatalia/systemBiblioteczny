@@ -90,4 +90,10 @@ class Borrow extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Returns::class, ['borrow_id' => 'id']);
     }
+
+    public function modifyDate($date, $days)
+    {
+        $date = $date->modify("+" . $days . " day");
+        return $date->format('Y-m-d 23:59:00');
+    }
 }

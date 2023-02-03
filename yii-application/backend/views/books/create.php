@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Categories;
-use backend\models\Autors;
 
 $cat_items = Categories::find()
             ->select(['category_name'])
