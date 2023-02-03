@@ -62,11 +62,8 @@ class ReadersController extends \yii\web\Controller
 
         if($reader->load(Yii::$app->request->post()) && $address->load(Yii::$app->request->post()))
         {
-            $ifexists = Reader::find()->where(['like', 'PESEL', $reader->PESEL, false])->one();
-
-            $postal_code = (string) $address->postal_code;
-            $postal_code = substr($postal_code, 0, 2) . "-" . substr($postal_code, 2);
-            $address->postal_code = $postal_code;
+            $ifexists = $this->readerExists($reader);
+            $address->postal_code = $this->postalCodeConvert($address);
 
             if($ifexists){
                 return $this->render('create', ['reader' => $reader, 'address' => $address, 'exists_info' => 'Czytelnik o takim numerze PESEL jest już zarejestrowany']);
@@ -91,17 +88,10 @@ class ReadersController extends \yii\web\Controller
         if($reader->load(Yii::$app->request->post()) && $address->load(Yii::$app->request->post()))
         {
             $pesel = Reader::findOne(['id' => $id]);
+            $address->postal_code = $this->postalCodeConvert($address);
 
-            $postal_code = (string) $address->postal_code;
-            $postal_code = substr($postal_code, 0, 2) . "-" . substr($postal_code, 2);
-            $address->postal_code = $postal_code;
-
-            if($reader->PESEL == $pesel->PESEL){
-                $ifexists = false;
-            }
-            else {
-                $ifexists = Reader::find()->where(['like', 'PESEL', $reader->PESEL, false])->one();
-            }
+            if($reader->PESEL == $pesel->PESEL) $ifexists = false;
+            else $ifexists = $this->readerExists($reader);
             if($ifexists){
                 return $this->render('update', ['reader' => $reader, 'address' => $address, 'exists_info' => 'Czytelnik o takim numerze PESEL jest już zarejestrowany']);
             }
@@ -112,7 +102,6 @@ class ReadersController extends \yii\web\Controller
                 }
             }
         }
-
         return $this->render('update', ['reader' => $reader, 'address' => $address, 'exists_info' => ""]);
     }
 
@@ -131,6 +120,17 @@ class ReadersController extends \yii\web\Controller
                 }
             }
         }
+    }
+
+    private function readerExists($model)
+    {
+        return Reader::find()->where(['like', 'PESEL', $model->PESEL, false])->one();
+    }
+
+    private function postalCodeConvert($model)
+    {
+        $postal_code = (string) $model->postal_code;
+        return substr($postal_code, 0, 2) . "-" . substr($postal_code, 2);
     }
 
 }
