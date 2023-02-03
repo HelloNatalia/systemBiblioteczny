@@ -83,4 +83,14 @@ class Reader extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Borrow::class, ['reader_id' => 'id']);
     }
+
+    public function readersArray()
+    {
+        $r_items = array();
+        $readers = $this->find()->all();
+        foreach($readers as $reader){
+            $r_items[$reader->id] = $reader->id . ' - ' . $reader->name . ' ' . $reader->surname . ' - PESEL: ' . $reader->PESEL;
+        }
+        return $r_items;
+    }
 }

@@ -28,4 +28,4 @@ use yii\widgets\ActiveForm;
     <?php ActiveForm::end()?>
 <?php } ?>
 
-<a href="<?=Url::to(['pay-end', 'id' => $model->id, 'days' => $days, 'price' => $pricetopay])?>"><button>Zakończ wypożyczenie</button></a>
+<a href="<?=Url::to(['borrow/end', 'id' => $model->id, 'days' => $days, 'price' => $pricetopay])?>"><button>Zakończ wypożyczenie</button></a>

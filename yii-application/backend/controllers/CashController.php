@@ -39,6 +39,7 @@ class CashController extends \yii\web\Controller
             'price' => $price,
             'pages' => $pages,
             'searchModel' => $searchModel,
+            'totalincome' => $this->moneyForBooks($models, $price),
         ]);
     }
 
@@ -51,6 +52,7 @@ class CashController extends \yii\web\Controller
         
         $price = Prices::find()->one();
         $datetime = new \DateTime('now', new \DateTimeZone('UTC'));
+        $datetime = new \DateTime($datetime ->format('Y-m-d 23:59:00')); 
         $returndate = new \DateTime($model->return_date);
         $days = (date_diff($datetime, $returndate));
 
@@ -101,12 +103,9 @@ class CashController extends \yii\web\Controller
         $borrow = Borrow::findOne(['id' => $id]);
         $now = new \DateTime('now', new \DateTimeZone('UTC'));
         $dbnow = $now->format('Y-m-d H:i:s');
-
         $new_date = new \DateTime('now', new \DateTimeZone('UTC'));
-        $new_date = $new_date->modify("+" . $qdays . " day");
-        $new_date = $new_date->format('Y-m-d 00:00:00');
 
-        $borrow->return_date = $new_date;
+        $borrow->return_date = $borrow->modifyDate($new_date, $qdays);
         $borrow->extend_quantity += 1;
 
         $returns = new Returns();
@@ -121,6 +120,24 @@ class CashController extends \yii\web\Controller
                 return $this->redirect(['index']);
             }
         }
+    }
+
+    private function moneyForBooks($models, $price)
+    {
+        $totalincome = 0;
+
+        foreach($models as $model) {
+
+            $datetime = new \DateTime('now', new \DateTimeZone('UTC'));
+            $datetime = new \DateTime($datetime ->format('Y-m-d 23:59:00')); 
+            $returndate = new \DateTime($model->return_date);
+            $days = (date_diff($datetime, $returndate));
+            $days = $days->format('%a'); 
+            $pricetopay = $days * $price->priceperday;
+
+            $totalincome += $pricetopay;
+        }
+        return $totalincome;
     }
 
 }

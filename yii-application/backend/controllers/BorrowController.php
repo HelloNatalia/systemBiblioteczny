@@ -53,19 +53,15 @@ class BorrowController extends \yii\web\Controller
     {
         $borrow = Borrow::findOne(['id' => $id]);
         $return_date = new DateTime($borrow->return_date);
-
-        $return_date->modify("+" . $days . " day");
-        $return_date = $return_date->format('Y-m-d 00:00:00');
-        $borrow->return_date = $return_date;
-        
+        $borrow->return_date = $borrow->modifyDate($return_date, $days);
         $borrow->extend_quantity += 1;
-        
+
         if($borrow->save(false)) {
             return $this->redirect(['index']);
         }   
     }
 
-    public function actionEnd($id)
+    public function actionEnd($id, $days, $price)
     {
         $borrow = Borrow::findOne(['id' => $id]);
         $now = new DateTime('now', new \DateTimeZone('UTC'));
@@ -76,16 +72,20 @@ class BorrowController extends \yii\web\Controller
 
         $returns = new Returns();
         $returns->borrow_id = $id;
-        $returns->days = 0;
-        $returns->price = 0;
+        $returns->days = $days;
+        $returns->price = $price;
         $returns->returned_date = $dbnow;
+        $returns->extended = 0;
 
         $stock = Books::find()->where(['id' => $borrow->book_id])->one();
         $stock->quantity += 1;
 
+        if($days == 0 && $price == 0) $destination = 'index';
+        else $destination = "cash/index";
+
         if($returns->save(false)) {
             if($borrow->save(false) && $stock->save(false)) {
-                return $this->redirect(['index']);
+                return $this->redirect([$destination]);
             }
         }
     }
@@ -96,63 +96,43 @@ class BorrowController extends \yii\web\Controller
         $days = new Days();
 
         if($id != ''){
-            if(Books::find()->andWhere(['id' => $id])->andWhere(['>', 'quantity', 0])->one()){
-                $borrow->book_id = $id;
-            }   
+            if(Books::find()->andWhere(['id' => $id])->andWhere(['>', 'quantity', 0])->one()) $borrow->book_id = $id; 
         } else if ($reader != ''){
-            if(Borrow::find()->where(['id' => $reader])->one()){
-                $borrow->reader_id = $reader;
-            }
-        }   
+            if(Borrow::find()->where(['id' => $reader])->one()) $borrow->reader_id = $reader;
+        }  
 
-        $b_items = array();
-        $books = Books::find()->leftJoin('autors', 'autors.id = books.autor_id')->where(['>', 'quantity', 0])->all();
-        foreach($books as $book) {
-            $b_items[$book->id] = $book->id . ' - ' . $book->title . ' - ' . $book->autor->name . ' ' . $book->autor->surname . ' - sztuk: ' . $book->quantity;
-        }
+        $books = new Books();
+        $b_items = $books->booksArray();
+        $reader = new Reader();
+        $r_items = $reader->readersArray();
 
-        $r_items = array();
-        $readers = Reader::find()->all();
-        foreach($readers as $reader){
-            $r_items[$reader->id] = $reader->id . ' - ' . $reader->name . ' ' . $reader->surname . ' - PESEL: ' . $reader->PESEL;
-        }
-
+        $return_array = [
+            'borrow' => $borrow,
+            'info' => '', 
+            'b_items' => $b_items, 
+            'r_items' => $r_items,
+            'days' => $days,
+        ];
+        
         if($borrow->load(Yii::$app->request->post()) && $days->load(Yii::$app->request->post())) {
 
             if(count(Borrow::find()->andWhere(['reader_id' => $borrow->reader_id])->andWhere(['returned' => 0])->all()) >= 5) {
-                return $this->render('create', ['borrow' => $borrow, 
-                'info' => 'Czytelnik ma już 5 wypożyczonych książek.', 
-                'b_items' => $b_items, 
-                'r_items' => $r_items,
-                'days' => $days,
-            ]);
+                $return_array['info'] = 'Czytelnik ma już 5 wypożyczonych książek.';
+                return $this->render('create', $return_array);
             }
-
             $now = new DateTime('now', new \DateTimeZone('UTC'));
             $dbnow = $now->format('Y-m-d H:i:s');
 
-            $returndate = new DateTime('now', new \DateTimeZone('UTC'));
-            $returndate = $returndate->modify("+" . $days->quantity . " day");
-            $returndate = $returndate->format('Y-m-d 00:00:00');
-
             $borrow->date_time = $dbnow;
-            $borrow->return_date = $returndate;
+            $borrow->return_date = $borrow->modifyDate($now, $days->quantity);
             $borrow->returned = 0;
-
             $borrow->extend_quantity = 0;
 
             if($borrow->save(false)) {
                 return $this->redirect(['created-borrow', 'id' => $borrow->id]);
             }
-
         }
-
-        return $this->render('create', [
-            'borrow' => $borrow, 
-            'b_items' => $b_items,
-            'r_items' => $r_items,
-            'days' => $days,
-        ]);
+        return $this->render('create', $return_array);
     }
 
     public function actionCreatedBorrow($id)

@@ -60,7 +60,7 @@ use backend\models\Borrow;
                             <?php } else { ?>
                                 <a href="<?=Url::to(['extend-days', 'id' => $model->id])?>"><button>Przedłuż</button></a>
                             <?php } ?>
-                            <a href="<?=Url::to(['end', 'id' => $model->id])?>"><button>Zakończ</button></a>
+                            <a href="<?=Url::to(['end', 'id' => $model->id, 'days' => 0, 'price' => 0])?>"><button>Zakończ</button></a>
                         </td>
                     <?php } ?>
                     
