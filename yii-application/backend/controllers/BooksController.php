@@ -48,7 +48,8 @@ class BooksController extends \yii\web\Controller
 
         if($autors->load(Yii::$app->request->post()))
         {   
-            $ifexists = Autors::find()->where(['like', 'name', $autors->name, false])->andWhere(['like', 'surname', $autors->surname, false])->andWhere(['like', 'country', $autors->country, false])->one();
+            $ifexists = $this->ifAuthorExists($autors);
+            // Autors::find()->where(['like', 'name', $autors->name, false])->andWhere(['like', 'surname', $autors->surname, false])->andWhere(['like', 'country', $autors->country, false])->one();
 
             if($ifexists && $books->load(Yii::$app->request->post()))
             {
@@ -83,7 +84,8 @@ class BooksController extends \yii\web\Controller
 
         if($autors->load(Yii::$app->request->post()))
         {   
-            $ifexists = Autors::find()->where(['like', 'name', $autors->name, false])->andWhere(['like', 'surname', $autors->surname, false])->andWhere(['like', 'country', $autors->country, false])->one();
+            $ifexists = $this->ifAuthorExists($autors);
+            // Autors::find()->where(['like', 'name', $autors->name, false])->andWhere(['like', 'surname', $autors->surname, false])->andWhere(['like', 'country', $autors->country, false])->one();
 
             if($ifexists && $books->load(Yii::$app->request->post()))
             {
@@ -180,16 +182,13 @@ class BooksController extends \yii\web\Controller
         }
     }
 
-    private function getSearch($search, $what)
-    {
-        if($what == 'title')
-        {
-            return Books::find()->orderBy(['title' => SORT_ASC])->leftJoin('autors', 'autors.id=books.autor_id')->where(['like', 'title', $search]);
-        }
-        else {
-            return Autors::find()->andFilterWhere(['like', 'Concat(name," ", surname)', $search]);
-        }
-        
+    private function ifAuthorExists($model)
+    {   
+        return Autors::find()
+                    ->where(['like', 'name', $model->name, false])
+                    ->andWhere(['like', 'surname', $model->surname, false])
+                    ->andWhere(['like', 'country', $model->country, false])
+                    ->one();
     }
 
 }
