@@ -3,9 +3,7 @@
 use yii\helpers\Url;
 use yii\DateTime;
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
 use yii\widgets\LinkPager;
-use backend\models\Borrow;
 
 ?>
 

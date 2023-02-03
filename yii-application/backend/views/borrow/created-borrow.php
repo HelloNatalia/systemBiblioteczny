@@ -5,7 +5,6 @@ use yii\helpers\Html;
 
 ?>
 
-
 <h2>Podsumowanie</h2><br><br>
 
 <p><b>Książka:</b></p>

@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\models\Books;
 ?>
 
 <h2>Na ile dni przedłużyć?</h2>

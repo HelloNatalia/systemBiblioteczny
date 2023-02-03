@@ -2,8 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use backend\models\Reader;
-use backend\models\Books;
 
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 

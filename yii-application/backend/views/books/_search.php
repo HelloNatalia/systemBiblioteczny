@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\jui\DatePicker;
 
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 
