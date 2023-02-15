@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use backend\models\Categories;
+use kartik\select2\Select2;
+use backend\models\Countries;
+use yii\helpers\ArrayHelper;
 
 $cat_items = Categories::find()
             ->select(['category_name'])
@@ -16,11 +19,14 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 <?= $form->field($autors, 'name')->textInput()?>
 <?= $form->field($autors, 'surname')->textInput()?>
 
-<?= $form->field($autors, 'country')->dropdownList([
-    'Poland' => 'Poland',
-    'Germany' => 'Germany',
-    'United Kingdom' => 'United Kingdom'
-], ['prompt' => "Select author's country"])?>
+<?= $form->field($autors, 'country')->widget(Select2::classname(), [
+    'data' => ArrayHelper::map(Countries::find()->select('name')->orderBy(['name' => SORT_ASC])->all(), 'name', 'name'),
+    'options' => ['placeholder' => 'Wybierz kraj'],
+    'pluginOptions' => [
+        'allowClear' => true,
+        'width' => '500px'
+    ],
+])->label("") ?>
 
 <?= $form->field($books, 'category_id')->dropdownList([$cat_items],
     ['prompt' => 'Select Category'])->label('Category')?>
