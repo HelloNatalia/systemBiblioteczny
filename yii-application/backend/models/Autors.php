@@ -46,4 +46,14 @@ class Autors extends \yii\db\ActiveRecord
             'country' => 'Country',
         ];
     }
+
+    public function getAuthorsList()
+    {
+        $models = Autors::find()->all();
+        $authorsData = [];
+        foreach($models as $model) {
+            $authorsData[$model->id] = $model->name . " " . $model->surname;
+        }
+        return $authorsData;
+    }
 }

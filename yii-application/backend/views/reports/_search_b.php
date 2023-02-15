@@ -4,29 +4,37 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use backend\models\Books;
-use backend\models\Categories;
 use yii\helpers\ArrayHelper;
+use backend\models\Autors;
+use backend\models\Categories;
+
+$authorsList = new Autors();
 
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
-
 <?= $form->field($searchModel, 'id')->widget(Select2::classname(), [
-    'data' => $booksData,
-    'options' => ['placeholder' => 'Wyszukaj książkę...'],
+    'data' => ArrayHelper::map(Books::find()->select('id')->orderBy(['id' => SORT_ASC])->all(), 'id', 'id'),
+    'options' => ['placeholder' => 'Wyszukaj ID książki...'],
     'pluginOptions' => [
         'allowClear' => true,
         'width' => '500px'
     ],
 ])->label("") ?>
-
+<?= $form->field($searchModel, 'title')->widget(Select2::classname(), [
+    'data' => ArrayHelper::map(Books::find()->select('title')->orderBy(['title' => SORT_ASC])->all(), 'title', 'title'),
+    'options' => ['placeholder' => 'Wyszukaj tytuł książki...'],
+    'pluginOptions' => [
+        'allowClear' => true,
+        'width' => '500px'
+    ],
+])->label("") ?>
 <?= $form->field($searchModel, 'autor_id')->widget(Select2::classname(), [
-    'data' => $authorsData,
+    'data' => $authorsList->getAuthorsList(),
     'options' => ['placeholder' => 'Wyszukaj autora...'],
     'pluginOptions' => [
         'allowClear' => true,
         'width' => '500px'
     ],
 ])->label("") ?>
-
 <?= $form->field($searchModel, 'publ_year')->widget(Select2::classname(), [
     'data' => ArrayHelper::map(Books::find()->select('publ_year')->orderBy(['publ_year' => SORT_ASC])->distinct()->all(), 'publ_year', 'publ_year'),
     'options' => ['placeholder' => 'Wyszukaj rok wydania...'],
@@ -35,9 +43,8 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
         'width' => '500px'
     ],
 ])->label("") ?>
-
 <?= $form->field($searchModel, 'category_id')->widget(Select2::classname(), [
-    'data' => ArrayHelper::map(Categories::find()->orderBy(['category_name' => SORT_ASC])->all(), 'id', 'category_name'),
+    'data' => ArrayHelper::map(Categories::find()->all(), 'id', 'category_name'),
     'options' => ['placeholder' => 'Wyszukaj kategorię...'],
     'pluginOptions' => [
         'allowClear' => true,
@@ -45,13 +52,12 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
     ],
 ])->label("") ?>
 
-
 <?= Html::submitButton('Szukaj')?>
-<?= Html::a('Pokaż wszystko', ['index', 'clear' => 1], ['class' => 'btn btn-primary btn-sm']) ?>
+<?= Html::a('Pokaż wszystko', ['status', 'clear' => 1], ['class' => 'btn btn-primary btn-sm']) ?>
 <p>
     <b>Ilość w bibliotece: </b>
-    <?= Html::a('&#129169;', ['index', 'sort' => 'asc'], ['class' => 'btn btn-primary btn-sm']) ?> 
-    <?= Html::a('&#129171;', ['index', 'sort' => 'desc'], ['class' => 'btn btn-primary btn-sm']) ?>
+    <?= Html::a('&#129169;', ['status', 'sort' => 'asc'], ['class' => 'btn btn-primary btn-sm']) ?> 
+    <?= Html::a('&#129171;', ['status', 'sort' => 'desc'], ['class' => 'btn btn-primary btn-sm']) ?>
 </p>
 
 

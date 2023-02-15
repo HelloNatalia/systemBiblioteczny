@@ -13,6 +13,7 @@ use yii\data\Pagination;
  * @property int $reader_id
  * @property int $book_id
  * @property string $return_date
+ *  * @property string $returned_date
  *
  * @property Books $book
  * @property Reader $reader
@@ -33,7 +34,7 @@ class SearchBorrow extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date_time', 'return_date'], 'safe'],
+            [['date_time', 'return_date', 'returned_date'], 'safe'],
             [['id', 'reader_id', 'book_id'], 'integer'],
             [['reader_id'], 'exist', 'skipOnError' => true, 'targetClass' => Reader::class, 'targetAttribute' => ['reader_id' => 'id']],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Books::class, 'targetAttribute' => ['book_id' => 'id']],
@@ -51,6 +52,7 @@ class SearchBorrow extends \yii\db\ActiveRecord
             'reader_id' => 'Reader ID',
             'book_id' => 'Book ID',
             'return_date' => 'Return Date',
+            'returned_date' => 'Returned Date',
         ];
     }
 
@@ -101,11 +103,14 @@ class SearchBorrow extends \yii\db\ActiveRecord
                     ->andFilterWhere(['borrow.reader_id' => $this->reader_id])
                     ->andFilterWhere(['borrow.book_id' => $this->book_id])
                     ->andFilterWhere(['like', 'borrow.date_time', $this->date_time])
-                    ->andFilterWhere(['like', 'borrow.return_date', $this->return_date]);
+                    ->andFilterWhere(['like', 'borrow.return_date', $this->return_date])
+                    ->andFilterWhere(['like', 'borrow.returned_date', $this->returned_date]);
         if($sort == 'd1asc') $query = $query->orderBy(['date_time' => SORT_ASC]);
         else if($sort == 'd1desc') $query = $query->orderBy(['date_time' => SORT_DESC]);
         else if($sort == 'd2asc') $query = $query->orderBy(['return_date' => SORT_ASC]);
         else if($sort == 'd2desc') $query = $query->orderBy(['return_date' => SORT_DESC]);
+        else if($sort == 'd3asc') $query = $query->orderBy(['returned_date' => SORT_ASC]);
+        else if($sort == 'd3desc') $query = $query->orderBy(['returned_date' => SORT_DESC]);
         
         $countQuery = clone $query;
         $pages = new Pagination(['totalCount' => $countQuery->count()]);

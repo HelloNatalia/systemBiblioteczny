@@ -32,12 +32,14 @@ class BooksController extends \yii\web\Controller
         $pages = $searchModel->search($query, $sort)[1];
 
         $booksData = $this->getBooksList();
+        $authorsData = $this->getAuthorsList();
 
         return $this->render('index', [
             'models' => $models,
             'pages' => $pages,
             'searchModel' => $searchModel,
             'booksData' => $booksData,
+            'authorsData' => $authorsData,
         ]);
 
     }
@@ -214,7 +216,7 @@ class BooksController extends \yii\web\Controller
         return $booksData;
     }
 
-    private function getAuthorsList()
+    public function getAuthorsList()
     {
         $models = Autors::find()->all();
         $authorsData = [];
