@@ -31,10 +31,13 @@ class BorrowController extends \yii\web\Controller
         $models = $searchModel->search($query, $sort)[0];
         $pages = $searchModel->search($query, $sort)[1];
 
+        $borrowsData = $this->getBorrowsList();
+
         return $this->render('index', [
             'models' => $models,
             'pages' => $pages,
             'searchModel' => $searchModel,
+            'borrowsData' => $borrowsData,
         ]);
     }
 
@@ -146,6 +149,13 @@ class BorrowController extends \yii\web\Controller
         if($stock->save(false)) {
             return $this->render('created-borrow', ['model' => $model, 'author' => $author]);
         }
+    }
+
+    public function getBorrowsList()
+    {
+        $models = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->where(['returned' => 0])->all();
+        $borrow = new Borrow();
+        return $borrow->get2Lists($models);
     }
 
 }

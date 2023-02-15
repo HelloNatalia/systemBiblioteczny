@@ -5,11 +5,12 @@ use yii\DateTime;
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
+
 ?>
 
 <h2>Wypożyczenia: </h2><br>
 
-<?= $this->render('_search', ['searchModel' => $searchModel])?><br>
+<?= $this->render('_search', ['searchModel' => $searchModel, 'borrowsData' => $borrowsData])?><br>
 
 <a href="<?=Url::to(['create', 'id' => '', 'reader' => ''])?>"><button>Dodaj</button></a>
 <br><br>

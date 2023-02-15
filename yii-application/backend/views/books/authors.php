@@ -8,7 +8,7 @@ $books = Books::find()->all();
 
 echo $this->render('_submenubook');
 
-echo $this->render('_searchauthor', ['searchModel' => $searchModel]);
+echo $this->render('_searchauthor', ['searchModel' => $searchModel, 'authorsData' => $authorsData]);
 
 foreach($models as $model) { 
     if(Books::find()->where('autor_id = ' . $model->id)->one() != null) { ?>

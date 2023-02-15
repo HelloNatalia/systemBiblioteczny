@@ -33,6 +33,7 @@ class CashController extends \yii\web\Controller
         $models = $searchModel->search($query, $sort)[0];
         $pages = $searchModel->search($query, $sort)[1];
 
+        $borrowsData = $this->getBorrowsList();
 
         return $this->render('index', [
             'models' => $models,
@@ -40,6 +41,7 @@ class CashController extends \yii\web\Controller
             'pages' => $pages,
             'searchModel' => $searchModel,
             'totalincome' => $this->moneyForBooks($models, $price),
+            'borrowsData' => $borrowsData,
         ]);
     }
 
@@ -138,6 +140,13 @@ class CashController extends \yii\web\Controller
             $totalincome += $pricetopay;
         }
         return $totalincome;
+    }
+
+    public function getBorrowsList()
+    {
+        $models = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->andWhere(['<', 'return_date', new Expression('NOW()')])->andWhere(['returned' => 0])->all();
+        $borrow = new Borrow();
+        return $borrow->get2Lists($models);
     }
 
 }

@@ -31,15 +31,18 @@ class BooksController extends \yii\web\Controller
         $models = $searchModel->search($query, $sort)[0];
         $pages = $searchModel->search($query, $sort)[1];
 
+        $booksData = $this->getBooksList();
+
         return $this->render('index', [
             'models' => $models,
             'pages' => $pages,
             'searchModel' => $searchModel,
+            'booksData' => $booksData,
         ]);
 
     }
 
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $books = new Books();
         $autors = new Autors();
@@ -60,6 +63,14 @@ class BooksController extends \yii\web\Controller
             {
                 $books->autor_id = $autors->id;
                 $this->getBookData($books, true);
+            }
+        }
+
+        if($id != ""){
+            if($one = Autors::find()->where(['id' => $id])->one()) {
+                $autors->name = $one->name;
+                $autors->surname = $one->surname;
+                $autors->country = $one->country;
             }
         }
 
@@ -136,10 +147,13 @@ class BooksController extends \yii\web\Controller
         $models = $searchModel->search($query)[0];
         $pages = $searchModel->search($query)[1];
 
+        $authorsData = $this->getAuthorsList();
+
         return $this->render('authors', [
             'models' => $models,
             'pages' => $pages,
             'searchModel' => $searchModel,
+            'authorsData' => $authorsData,
         ]);
     }
 
@@ -188,6 +202,26 @@ class BooksController extends \yii\web\Controller
                     ->andWhere(['like', 'surname', $model->surname, false])
                     ->andWhere(['like', 'country', $model->country, false])
                     ->one();
+    }
+
+    private function getBooksList()
+    {
+        $models = Books::find()->leftJoin('autors', 'books.autor_id = autors.id')->orderBy(['title' => SORT_ASC])->all();
+        $booksData = [];
+        foreach($models as $model){
+            $booksData[$model->id] = $model->id . ". \"" . $model->title . "\" " . $model->autor->name . " " . $model->autor->surname;
+        }
+        return $booksData;
+    }
+
+    private function getAuthorsList()
+    {
+        $models = Autors::find()->all();
+        $authorsData = [];
+        foreach($models as $model) {
+            $authorsData[$model->id] = $model->name . " " . $model->surname;
+        }
+        return $authorsData;
     }
 
 }

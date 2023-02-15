@@ -10,13 +10,13 @@ use yii\widgets\LinkPager;
 
 <?= $this->render('_submenubook')?>
 
-<?= $this->render('_search', ['searchModel' => $searchModel])?>
+<?= $this->render('_search', ['searchModel' => $searchModel, 'booksData' => $booksData])?>
 
 <br><br>
 
 
 
-<a href="<?=Url::to(['create'])?>"><button id="new_book">Add new book</button></a>
+<a href="<?=Url::to(['create', 'id' => ""])?>"><button id="new_book">Add new book</button></a>
 <?php foreach($models as $model) { ?>
 
     <div class="book">

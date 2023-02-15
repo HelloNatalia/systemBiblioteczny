@@ -120,8 +120,8 @@ class SearchBooks extends \yii\db\ActiveRecord
     {
         $query = $query
                     ->andFilterWhere(['books.id' => $this->id])
-                    ->andFilterWhere(['like', 'books.title', $this->title])
-                    ->andFilterWhere(['publ_year' => $this->publ_year]);
+                    ->andFilterWhere(['publ_year' => $this->publ_year])
+                    ->andFilterWhere(['title' => $this->title]);
 
         if($q_sort == 'asc') $query = $query->orderBy(['quantity' => SORT_ASC]);
         else if($q_sort == 'desc') $query = $query->orderBy(['quantity' => SORT_DESC]);
