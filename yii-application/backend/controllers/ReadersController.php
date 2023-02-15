@@ -25,10 +25,13 @@ class ReadersController extends \yii\web\Controller
         $models = $searchModel->search()[0];
         $pages = $searchModel->search()[1];
 
+        $readersData = $this->getReadersList();
+
         return $this->render('index', [
             'models' => $models,
             'searchModel' => $searchModel,
             'pages' => $pages,
+            'readersData' => $readersData,
         ]);
     }
 
@@ -131,6 +134,16 @@ class ReadersController extends \yii\web\Controller
     {
         $postal_code = (string) $model->postal_code;
         return substr($postal_code, 0, 2) . "-" . substr($postal_code, 2);
+    }
+
+    private function getReadersList()
+    {
+        $models = Reader::find()->all();
+        $readersData = [];
+        foreach($models as $model) {
+            $readersData[$model->id] = $model->id . " - " . $model->name . " " . $model->surname . " PESEL: " . $model->PESEL;
+        }
+        return $readersData;
     }
 
 }
