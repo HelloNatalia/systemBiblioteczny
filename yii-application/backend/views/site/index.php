@@ -14,21 +14,25 @@ $this->title = 'My Yii Application';
     <div class="body-content">
 
         <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <h2>Books</h2>
                 <p><a class="btn btn-lg btn-success" href="index.php?r=books%2Findex">Go to books</a></p>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <h2>Borrows</h2>
                 <p><a class="btn btn-lg btn-success" href="index.php?r=borrow%2Findex">Go to borrows</a></p>    
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <h2>Readers</h2>
                 <p><a class="btn btn-lg btn-success" href="index.php?r=readers%2Findex">Go to readers</a></p>
             </div>
-            <div class="col-lg-3">
+            <div class="col-lg-2">
                 <h2>Cash</h2>
                 <p><a class="btn btn-lg btn-success" href="index.php?r=cash%2Findex">Go to cash</a></p>
+            </div>
+            <div class="col-lg-2">
+                <h2>Raporty</h2>
+                <p><a class="btn btn-lg btn-success" href="index.php?r=reports%2Findex">Go to reports</a></p>
             </div>
         </div>
 
