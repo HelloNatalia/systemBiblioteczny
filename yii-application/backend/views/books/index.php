@@ -16,7 +16,7 @@ use yii\widgets\LinkPager;
 
 
 
-<a href="<?=Url::to(['create'])?>"><button id="new_book">Add new book</button></a>
+<a href="<?=Url::to(['create', 'id' => ""])?>"><button id="new_book">Add new book</button></a>
 <?php foreach($models as $model) { ?>
 
     <div class="book">

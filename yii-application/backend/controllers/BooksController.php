@@ -42,7 +42,7 @@ class BooksController extends \yii\web\Controller
 
     }
 
-    public function actionCreate()
+    public function actionCreate($id)
     {
         $books = new Books();
         $autors = new Autors();
@@ -63,6 +63,14 @@ class BooksController extends \yii\web\Controller
             {
                 $books->autor_id = $autors->id;
                 $this->getBookData($books, true);
+            }
+        }
+
+        if($id != ""){
+            if($one = Autors::find()->where(['id' => $id])->one()) {
+                $autors->name = $one->name;
+                $autors->surname = $one->surname;
+                $autors->country = $one->country;
             }
         }
 
