@@ -31,10 +31,13 @@ class BooksController extends \yii\web\Controller
         $models = $searchModel->search($query, $sort)[0];
         $pages = $searchModel->search($query, $sort)[1];
 
+        $booksData = $this->getBooksList();
+
         return $this->render('index', [
             'models' => $models,
             'pages' => $pages,
             'searchModel' => $searchModel,
+            'booksData' => $booksData,
         ]);
 
     }
@@ -188,6 +191,16 @@ class BooksController extends \yii\web\Controller
                     ->andWhere(['like', 'surname', $model->surname, false])
                     ->andWhere(['like', 'country', $model->country, false])
                     ->one();
+    }
+
+    private function getBooksList()
+    {
+        $models = Books::find()->leftJoin('autors', 'books.autor_id = autors.id')->orderBy(['title' => SORT_ASC])->all();
+        $booksData = [];
+        foreach($models as $model){
+            $booksData[$model->id] = $model->id . ". \"" . $model->title . "\" " . $model->autor->name . " " . $model->autor->surname;
+        }
+        return $booksData;
     }
 
 }

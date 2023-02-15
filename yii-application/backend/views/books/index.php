@@ -10,7 +10,7 @@ use yii\widgets\LinkPager;
 
 <?= $this->render('_submenubook')?>
 
-<?= $this->render('_search', ['searchModel' => $searchModel])?>
+<?= $this->render('_search', ['searchModel' => $searchModel, 'booksData' => $booksData])?>
 
 <br><br>
 
