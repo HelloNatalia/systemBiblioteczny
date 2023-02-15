@@ -10,7 +10,7 @@ echo $this->render('_submenubook')?>
 
 <h3>Books written by <?= $author->autor->name?> <?= $author->autor->surname?></h3>
 
-<?= $this->render('_searchtitle_a', ['searchModel' => $searchModel, 'author' => $author])?>
+<?= $this->render('_searchtitle_a', ['searchModel' => $searchModel, 'author' => $author, 'id' => $id])?>
 
 <?php foreach($models as $model) { ?>
 

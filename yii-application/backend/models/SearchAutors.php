@@ -29,6 +29,7 @@ class SearchAutors extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id'], 'integer'],
             [['name', 'country'], 'string', 'max' => 100],
             [['surname'], 'string', 'max' => 150],
         ];
@@ -71,6 +72,7 @@ class SearchAutors extends \yii\db\ActiveRecord
     public function search($query)
     {
         $query = $query
+                    ->andFilterWhere(['autors.id' => $this->id])
                     ->andFilterWhere(['like', 'name', $this->name])
                     ->andFilterWhere(['like', 'surname', $this->surname])
                     ->andFilterWhere(['country' => $this->country]);
