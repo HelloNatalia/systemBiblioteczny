@@ -2,6 +2,9 @@
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use kartik\select2\Select2;
+use backend\models\Countries;
+use yii\helpers\ArrayHelper;
 
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 
@@ -30,7 +33,15 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 <?= $form->field($address, 'number')->textInput()?>
 <?= $form->field($address, 'postal_code')->textInput(['type' => 'number', 'placeholder' => 'XXXXX']) ?>
 <?= $form->field($address, 'city')->textInput() ?>
-<?= $form->field($address, 'country')->textInput() ?>
+
+<?= $form->field($address, 'country')->widget(Select2::classname(), [
+    'data' => ArrayHelper::map(Countries::find()->select('name')->orderBy(['name' => SORT_ASC])->all(), 'name', 'name'),
+    'options' => ['placeholder' => 'Wybierz kraj'],
+    'pluginOptions' => [
+        'allowClear' => true,
+        'width' => '500px'
+    ],
+])->label("Kraj") ?>
 
 
 <?= Html::submitButton('Post')?>
