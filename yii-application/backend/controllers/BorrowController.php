@@ -154,13 +154,8 @@ class BorrowController extends \yii\web\Controller
     public function getBorrowsList()
     {
         $models = Borrow::find()->leftJoin('reader', 'borrow.reader_id = reader.id')->leftJoin('books', 'books.id = borrow.book_id')->where(['returned' => 0])->all();
-        $readersData = [];
-        $booksData = [];
-        foreach($models as $model) {
-            $readersData[$model->reader->id] = $model->reader->id . " - " . $model->reader->name . " " . $model->reader->surname;
-            $booksData[$model->book->id] = $model->book->id . " - \"" . $model->book->title . "\"";
-        }
-        return ['readersData' => $readersData, 'booksData' => $booksData];
+        $borrow = new Borrow();
+        return $borrow->get2Lists($models);
     }
 
 }

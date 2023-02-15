@@ -96,4 +96,15 @@ class Borrow extends \yii\db\ActiveRecord
         $date = $date->modify("+" . $days . " day");
         return $date->format('Y-m-d 23:59:00');
     }
+
+    public function get2Lists($models)
+    {
+        $readersData = [];
+        $booksData = [];
+        foreach($models as $model) {
+            $readersData[$model->reader->id] = $model->reader->id . " - " . $model->reader->name . " " . $model->reader->surname;
+            $booksData[$model->book->id] = $model->book->id . " - \"" . $model->book->title . "\"";
+        }
+        return ['readersData' => $readersData, 'booksData' => $booksData];
+    }
 }

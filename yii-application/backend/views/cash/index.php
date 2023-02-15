@@ -14,7 +14,7 @@ use yii\widgets\LinkPager;
 
 <h2>Należności: </h2><br><br>
 
-<?= $this->render('_search', ['searchModel' => $searchModel])?><br>
+<?= $this->render('_search', ['searchModel' => $searchModel, 'borrowsData' => $borrowsData])?><br>
 
     <table style="border: 1px solid;">
         <tr style="border: 1px solid;">
