@@ -25,7 +25,7 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 
 <?= $form->field($books, 'category_id')->widget(Select2::classname(), [
     'data' => ArrayHelper::map(Categories::find()->orderBy(['category_name' => SORT_ASC])->all(), 'id', 'category_name'),
-    'options' => ['placeholder' => 'Wybierz kraj'],
+    'options' => ['placeholder' => 'Wybierz kategorię'],
     'pluginOptions' => [
         'allowClear' => true,
         'width' => '500px'
