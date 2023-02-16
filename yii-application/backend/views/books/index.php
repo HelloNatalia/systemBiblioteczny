@@ -17,7 +17,7 @@ use yii\widgets\LinkPager;
     <div class="row justify-content-center">
         <?php foreach($models as $model) { ?>
             <div class="col-6 col-md-4 col-lg-3 col-xxl-2 m-3">
-                <div class="card card-book">
+                <div class="card" style="width: 14rem;">
                     <img class="card-img-left" src="<?=Url::to('@web/books_img/' . $model->img)?>" alt="Card image cap">
                     <a href="<?=Url::toRoute(['/books/book', 'id' => $model->id])?>" class="text-decoration-none text-reset">
                         <div class="card-body">
