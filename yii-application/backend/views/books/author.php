@@ -5,8 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\LinkPager;
 
 $author = Books::find()->leftJoin('autors', 'autors.id = books.autor_id')->where('autor_id = ' . $id)->one();
-
-echo $this->render('_submenubook')?>
+?>
 
 <h3>Books written by <?= $author->autor->name?> <?= $author->autor->surname?></h3>
 

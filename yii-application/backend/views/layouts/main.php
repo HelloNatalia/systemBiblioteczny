@@ -28,19 +28,18 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => 'Library',
+        'brandLabel' => 'Biblioteka',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Books', 'url' => ['/books/index']],
-        ['label' => 'Borrows', 'url' => ['/borrow/index']],
-        ['label' => 'Readers', 'url' => ['/readers/index']],
-        ['label' => 'Cash', 'url' => ['/cash/index']],
-        ['label' => 'Reports', 'url' => ['/reports/index']],
+        ['label' => 'Książki', 'url' => ['/books/index']],
+        ['label' => 'Wypożyczenia', 'url' => ['/borrow/index']],
+        ['label' => 'Czytelnicy', 'url' => ['/readers/index']],
+        ['label' => 'Należności', 'url' => ['/cash/index']],
+        ['label' => 'Raporty', 'url' => ['/reports/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];

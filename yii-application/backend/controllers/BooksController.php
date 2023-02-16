@@ -33,6 +33,7 @@ class BooksController extends \yii\web\Controller
 
         $booksData = $this->getBooksList();
         $authorsData = $this->getAuthorsList();
+        $this->view->title = 'Książki';
 
         return $this->render('index', [
             'models' => $models,
@@ -150,6 +151,7 @@ class BooksController extends \yii\web\Controller
         $pages = $searchModel->search($query)[1];
 
         $authorsData = $this->getAuthorsList();
+        $this->view->title = 'Autorzy';
 
         return $this->render('authors', [
             'models' => $models,
