@@ -36,7 +36,7 @@ a.asc:after {
 }
 
 a.desc:after {
-    border-top: solid 7px #212529;
+    border-top: solid 7px #292126;
     border-bottom-width: 0;
 }
 
@@ -88,3 +88,4 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
