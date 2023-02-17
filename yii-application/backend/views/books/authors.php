@@ -14,7 +14,7 @@ $books = Books::find()->all();
 <?=$this->render('_submenubook')?>
 <?=$this->render('_searchauthor', ['searchModel' => $searchModel, 'authorsData' => $authorsData])?>
 
-<table class="table mt-5 table-striped">
+<table class="table mt-5 table-striped table-bordered">
     <thead class="table-dark">
         <tr>
             <td scope="col">L.p.</td>
