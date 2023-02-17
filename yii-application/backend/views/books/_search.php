@@ -52,8 +52,8 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
     </div>
     <div class="col-12 mt-3">
         <p class="fs-6">Sortuj według ilości: 
-            <?= Html::a('&#129169;', ['index', 'sort' => 'asc'], ['class' => 'ms-2 btn btn-dark btn-sm']) ?> 
-            <?= Html::a('&#129171;', ['index', 'sort' => 'desc'], ['class' => 'ms-1 btn btn-dark btn-sm']) ?>
+            <?= Html::a('&#129169;', ['index', 'sort' => 'asc'], ['class' => 'ms-2 btn btn-dark btn-sm', 'title' => 'Rosnąco']) ?> 
+            <?= Html::a('&#129171;', ['index', 'sort' => 'desc'], ['class' => 'ms-1 btn btn-dark btn-sm', 'title' => 'Malejąco']) ?>
         </p>
     </div>
 </div>
