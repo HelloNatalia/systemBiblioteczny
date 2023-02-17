@@ -138,7 +138,7 @@ class BooksController extends \yii\web\Controller
 
     public function actionAuthors()
     {
-        $query = Autors::find();
+        $query = Autors::find()->orderBy(['surname' => SORT_ASC]);
         $searchModel = new SearchAutors();
 
         if(Yii::$app->request->get('clear') == 1) {

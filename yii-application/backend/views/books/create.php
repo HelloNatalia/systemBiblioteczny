@@ -9,7 +9,7 @@ use yii\helpers\ArrayHelper;
 
 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
 
-<p class="display-5 fs-3 mt-3">Dodaj nową książkę</p>
+<p class="display-5 fs-2 mt-3">Dodaj nową książkę</p>
 
 <div class="form-group">
     <div class="row p-4 mt-2">
