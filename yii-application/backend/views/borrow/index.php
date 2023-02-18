@@ -50,7 +50,7 @@ use yii\widgets\LinkPager;
                             <th scope="row"><?=$model->id?></th>
                             <td><?=$model->date_time?></td>
                             <td><?=$model->return_date?></td>
-                            <td><a href="<?=Url::to(['/readers/author', 'id' => $model->reader->id])?>" class="text-decoration-none text-reset"><?=$model->reader->id?> <?=$model->reader->name?> <?=$model->reader->surname?></a></td>
+                            <td><a href="<?=Url::to(['/readers/reader', 'id' => $model->reader->id])?>" class="text-decoration-none text-reset"><?=$model->reader->id?> <?=$model->reader->name?> <?=$model->reader->surname?></a></td>
                             <td><a href="<?=Url::to(['/books/book', 'id' => $model->book->id])?>" class="text-decoration-none text-reset"><?=$model->book->id?> <?=$model->book->title?></a></td>
                             
                             <?php if($returndate < $datetime) { ?>
@@ -78,9 +78,14 @@ use yii\widgets\LinkPager;
         </div>
     </div>
 
-    <?php echo LinkPager::widget([
-    'pagination' => $pages,
-    ]); ?>
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-sm-8 col-md-5 col-lg-2">
+            <?php echo LinkPager::widget([
+                'pagination' => $pages,
+                'pageCssClass' => 'page-link',
+            ]); ?>
+        </div>
+    </div>
 
 </div>
 

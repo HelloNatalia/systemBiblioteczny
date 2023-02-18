@@ -71,9 +71,15 @@ use yii\widgets\LinkPager;
             </div>
         <?php } ?>
     </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-sm-8 col-md-5 col-lg-2">
+            <?php echo LinkPager::widget([
+                'pagination' => $pages,
+                'pageCssClass' => 'page-link',
+            ]); ?>
+        </div>
+    </div>
 </div>
 
-<?php echo LinkPager::widget([
-    'pagination' => $pages,
-]); ?>
+
 

@@ -89,3 +89,6 @@ a.desc:after {
     outline: none;
 }
 
+.pagination ul li {
+    border: 1px solid black;
+}
