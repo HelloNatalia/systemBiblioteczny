@@ -2,15 +2,58 @@
 /** @var yii\web\View $this */
 use yii\helpers\Url;
 ?>
-<h1>reports/index</h1>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
-
-<a href="<?=Url::to(['borrows'])?>"><button>Wypożyczenia</button></a>
-<a href="<?=Url::to(['returns'])?>"><button>Zwroty</button></a>
-<a href="<?=Url::to(['extensions'])?>"><button>Przedłużenia</button></a>
-<a href="<?=Url::to(['paid'])?>"><button>Wpływy</button></a>
-<a href="<?=Url::to(['status'])?>"><button>Status</button></a>
+<div class="container">
+    <div class="row site-row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4">
+            <a class="text-reset text-decoration-none text-center" href="<?=Url::to(['borrows'])?>">
+                <div class="card m-5 shadow">
+                    <img class="card-img-top" src="<?=Url::to('@web/assets/rborrows.jpg')?>" alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">Wypożyczenia</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <a class="text-reset text-decoration-none text-center" href="<?=Url::to(['returns'])?>">
+                <div class="card m-5 shadow">
+                    <img class="card-img-top" src="<?=Url::to('@web/assets/rreturns.jpg')?>" alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">Zwroty</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <a class="text-reset text-decoration-none text-center" href="<?=Url::to(['extensions'])?>">
+                <div class="card m-5 shadow">
+                    <img class="card-img-top" src="<?=Url::to('@web/assets/rextends.jpg')?>" alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">Przedłużenia</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <a class="text-reset text-decoration-none text-center" href="<?=Url::to(['paid'])?>">
+                <div class="card m-5 shadow">
+                    <img class="card-img-top" src="<?=Url::to('@web/assets/rcash.jpg')?>" alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">Należności</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <a class="text-reset text-decoration-none text-center" href="<?=Url::to(['status'])?>">
+                <div class="card m-5 shadow">
+                    <img class="card-img-top" src="<?=Url::to('@web/assets/rstatus.jpg')?>" alt="Card image cap">
+                    <div class="card-body">
+                    <h5 class="card-title">Status</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

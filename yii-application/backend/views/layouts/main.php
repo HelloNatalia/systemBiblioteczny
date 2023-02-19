@@ -28,22 +28,21 @@ AppAsset::register($this);
 <header>
     <?php
     NavBar::begin([
-        'brandLabel' => 'Library',
+        'brandLabel' => 'Biblioteka',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'Books', 'url' => ['/books/index']],
-        ['label' => 'Borrows', 'url' => ['/borrow/index']],
-        ['label' => 'Readers', 'url' => ['/readers/index']],
-        ['label' => 'Cash', 'url' => ['/cash/index']],
-        ['label' => 'Reports', 'url' => ['/reports/index']],
+        ['label' => 'Książki', 'url' => ['/books/index']],
+        ['label' => 'Wypożyczenia', 'url' => ['/borrow/index']],
+        ['label' => 'Czytelnicy', 'url' => ['/readers/index']],
+        ['label' => 'Należności', 'url' => ['/cash/index']],
+        ['label' => 'Raporty', 'url' => ['/reports/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Zaloguj', 'url' => ['/site/login']];
     }     
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
@@ -54,8 +53,8 @@ AppAsset::register($this);
     } else {
         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
+                'Wyloguj (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'btn btn-link logout text-decoration-none text-white']
             )
             . Html::endForm();
     }
