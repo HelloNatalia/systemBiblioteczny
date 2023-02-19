@@ -22,7 +22,7 @@ use yii\widgets\LinkPager;
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 mt-4">
             <table class="table table-striped">
                 <thead class="table-dark">
                     <td scope="col">ID</td>
@@ -64,7 +64,7 @@ use yii\widgets\LinkPager;
                                     <?php } else if (((date_diff($returndate, $datetime))->format('%a')) > 14) { 
                                         $left = (date_diff($returndate, $datetime))->format('%a'); ?>
                                         <button class="btn btn-dark btn-sm" disabled="disabled">Przedłuż</button>
-                                        <small>Możliwość przedłużenia za <?=$left?> dni</small>
+                                        <small>Możliwość przedłużenia za <?=$left-14?> dni</small>
                                     <?php } else { ?>
                                         <a href="<?=Url::to(['extend-days', 'id' => $model->id])?>"><button class="btn btn-dark btn-sm">Przedłuż</button></a>
                                     <?php } ?>
