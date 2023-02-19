@@ -32,7 +32,7 @@ $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']])?>
     </div>
     <div class="row mt-4">
         <div class="col-6 col-md-4 col-lg-2">
-            <?= $form->field($days, 'quantity')->textInput(['type' => 'number', 'value' => 30])?>
+            <?= $form->field($days, 'quantity')->textInput(['type' => 'number', 'value' => 30])->label("Ilość dni") ?>
         </div>
         <div class="col mt-4">
             <?= Html::submitButton('Dodaj', ['class' => 'btn btn-success btn-md'])?>
