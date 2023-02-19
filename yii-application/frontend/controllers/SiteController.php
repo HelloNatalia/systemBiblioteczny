@@ -15,6 +15,7 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use backend\models\Reader;
 
 /**
  * Site controller
@@ -154,14 +155,32 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+        if ($model->load(Yii::$app->request->post()) && Reader::find()->andWhere(['id' => $model->username])->andWhere(['email' => $model->email])->one()) {
+            if ($model->signup()) {
+                Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+                return $this->goHome();
+            }
         }
 
         return $this->render('signup', [
             'model' => $model,
         ]);
+    }
+
+    public function actionSignupForAdmin($id)
+    {
+        if($id == 'passwordforcreateadminuser') {
+            $model = new SignupForm();
+            if ($model->load(Yii::$app->request->post()) && $model->signup1()) {
+                Yii::$app->session->setFlash('success', 'Utworzono konto, na podany adres e-mail został wysłany kod weryfikacyjy.');
+                return $this->goHome();
+            }
+
+            return $this->render('signup-for-admin', [
+                'model' => $model,
+            ]);
+        }
+        
     }
 
     /**
