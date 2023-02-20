@@ -12,12 +12,12 @@ This application was created to **manage library tasks**. It is separated into f
 ### Backend - side managed by employees - the ❤️ of the application
 
 The backend part is intended to be used by library employees. There are many functions to create, edit, manage, etc. all important information.
-An employee has his/her admin account on the application and can manage books (see, create, edit, delete, borrow to the reader), borrows (see, create, extend the deadline, settle cash arrears), readers (create, edit, see borrowed books), can also see reports like all borrows, returns, the status of books in the library. 
+An employee has own admin account on the application and can manage books (see, create, edit, delete, borrow to the reader), borrows (see, create, extend the deadline, settle cash arrears), readers (create, edit, see borrowed books), can also see reports like all borrows, returns, the status of books in the library. 
 
 
 ### Frontend - client side
 
-This part enables a client to signup and login by his/her 'reader ID'. Thanks to that the logged-in user has access to his borrowed books, can see how many days are left to the deadline, and what's importantly, can extend the deadline online. 
+This part enables a client to signup and login by 'reader ID'. Thanks to that the logged-in user has access to his borrowed books, can see how many days are left to the deadline, and what's importantly, can extend the deadline online. 
 
 Of course, on every page is a possibility to search for a specific record with **autocomplete forms**, there are also sorting options for many data.
 
@@ -83,7 +83,6 @@ The last page on the backend side provides different reports like all borrows ev
   It is an MVC PHP web application framework.
 - **Bootstrap 5**
 - **PHP 8**
-<br>
 
 - **Database** - MariaDB (phpMyAdmin)
 
@@ -95,15 +94,15 @@ The last page on the backend side provides different reports like all borrows ev
 
 ## ⚙️ Installation
 - [ ]  Add unpacked files into a created folder inside xampp/htdocs
-- [ ] Open IDE you use and open created folder in the terminal (go into yii-application -> application name)
+- [ ] Open IDE you use and open created folder in the terminal (go into yii-application)
 - [ ] Command: 
 ```composer create-project```
 (If you don't have composer you need to install it first)
 - [ ] Command: 
 ```php init```
 (to initialize project)
-- [ ] Now you have this project working but there is an error with the database, so go into **common/config/main-local.php** and write the name of your database
-My database file is here. Insert this SQL into a new database in phpMyAdmin (remember, the name of the database must be the same as you inserted into main-local.php file)
+- [ ] Now you have this project working but there is an error with the database, so go into **common/config/main-local.php** and write the name of your database.
+My database file is <a download href="[path/to/the/download/file](https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/library.sql)">here</a>. Insert this SQL into a new database in phpMyAdmin (remember, the name of the database must be the same as you inserted into main-local.php file)
 
 **🎉 Congratulations, the project is working! 🎉**
 
