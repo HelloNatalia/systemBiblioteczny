@@ -80,7 +80,7 @@ The last page on the backend side provides different reports like all borrows ev
 <br>
 
 - **Yii Framework 2.0**
-  It is an MVC PHP web application framework.
+It is an MVC PHP web application framework.
 - **Bootstrap 5**
 - **PHP 8**
 
@@ -104,7 +104,7 @@ The last page on the backend side provides different reports like all borrows ev
 ```php init```
 (to initialize project)
 - [ ] Now you have this project working but there is an error with the database, so go into **common/config/main-local.php** and write the name of your database.
-My database file is <a href="https:/github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/library.sql">here</a>. Insert this SQL into a new database in phpMyAdmin (remember, the name of the database must be the same as you inserted into main-local.php file)
+My database file is here: https:/github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/library.sql. Insert this SQL into a new database in phpMyAdmin (remember, the name of the database must be the same as you inserted into main-local.php file)
 
 **🎉 Congratulations, the project is working! 🎉**
 
