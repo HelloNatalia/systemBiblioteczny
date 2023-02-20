@@ -17,8 +17,8 @@ Of course, on every page is a possibility to search for a specific record with *
 - **Books**
 The main function here is to show all books that the library has and how many and which books are available to borrow. 
 The possibilities distinctive for the backend side are functions like creating, editing, deleting, and borrowing selected book.
-<img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG" style="width: 250px"/>
-<img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazka-karta-admin.PNG" style="width: 250px"/>
+<img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG" style="width: 250px"/><img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazka-karta-admin.PNG" style="width: 250px"/>
+
 
 - **Authors**
 Shows all authors of all the books in the library, and when you click selected author, it will show a list of his/her books.
