@@ -95,6 +95,7 @@ class CashController extends \yii\web\Controller
 
         if($returns->save(false)) {
             if($borrow->save(false) && $stock->save(false)) {
+                Yii::$app->session->setFlash('success', 'Rozliczono czytelnika i zakończono wypożyczenie!');
                 return $this->redirect(['index']);
             }
         }
@@ -119,6 +120,7 @@ class CashController extends \yii\web\Controller
 
         if($returns->save(false)) {
             if($borrow->save(false)) {
+                Yii::$app->session->setFlash('success', 'Rozliczono czytelnika i przedłużono wypożyczenie!');
                 return $this->redirect(['index']);
             }
         }

@@ -74,6 +74,7 @@ class ReadersController extends \yii\web\Controller
             else if(!$ifexists && $address->save(false)){
                 $reader->address_id = $address->id;
                 if($reader->save(false)){
+                    Yii::$app->session->setFlash('success', 'Utworzono nowego czytelnika!');
                     return $this->redirect(['reader', 'id' => $reader->id]);
                 }
             }
@@ -101,6 +102,7 @@ class ReadersController extends \yii\web\Controller
             else if(!$ifexists && $address->save(false)){
                 $reader->address_id = $address->id;
                 if($reader->save(false)){
+                    Yii::$app->session->setFlash('success', 'Zaaktualizowano informacje o czytelniku!');
                     return $this->redirect(['reader', 'id' => $reader->id]);
                 }
             }
@@ -114,16 +116,17 @@ class ReadersController extends \yii\web\Controller
         return $this->render('delete-view', ['model' => $model]);
     }
 
-    public function actionDelete($id)
-    {
-        if($reader = Reader::findOne(['id' => $id])){
-            if($address = Address::findOne(['id' => $reader->address_id])){
-                if($reader->delete() && $address->delete()){
-                    return $this->redirect(['index']);
-                }
-            }
-        }
-    }
+    // public function actionDelete($id)
+    // {
+    //     if($reader = Reader::findOne(['id' => $id])){
+    //         if($address = Address::findOne(['id' => $reader->address_id])){
+    //             if($reader->delete() && $address->delete()){
+    //                 Yii::$app->session->setFlash('success', 'Usunięto czytelnika!');
+    //                 return $this->redirect(['index']);
+    //             }
+    //         }
+    //     }
+    // }
 
     private function readerExists($model)
     {
