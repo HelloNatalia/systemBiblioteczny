@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use Yii;
+use DateTime;
 use backend\models\Reader;
 use backend\models\SearchReader;
 use backend\models\SearchBooks;
@@ -10,6 +11,7 @@ use backend\models\Address;
 use backend\models\Borrow;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use backend\models\Days;
 
 
 class ReaderController extends \yii\web\Controller
@@ -21,7 +23,7 @@ class ReaderController extends \yii\web\Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index'],
+                        'actions' => ['index', 'extend-days', 'extend'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -58,5 +60,29 @@ class ReaderController extends \yii\web\Controller
             'pages' => $pages,
             'searchModel' => $searchModel,
         ]);
+    }
+
+    public function actionExtendDays($id)
+    {
+        $days = new Days();
+
+        if($days->load(Yii::$app->request->post())){
+            return $this->redirect(['extend', 'id' => $id, 'days' => $days->quantity]);
+        }
+
+        return $this->render('extend-days', ['borrow_id' => $id, 'days' => $days]);
+    }
+
+    public function actionExtend($id, $days)
+    {
+        $borrow = Borrow::findOne(['id' => $id]);
+        $return_date = new DateTime($borrow->return_date);
+        $borrow->return_date = $borrow->modifyDate($return_date, $days);
+        $borrow->extend_quantity += 1;
+
+        if($borrow->save(false)) {
+            Yii::$app->session->setFlash('success', 'Udało się przedłużyć wypożyczenie!');
+            return $this->redirect(['index']);
+        }   
     }
 }

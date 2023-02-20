@@ -128,6 +128,19 @@ use yii\widgets\LinkPager;
                                         </div>
                                     <?php } ?>
                                 </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <?php if($book->extend_quantity >= 2) { ?>
+                                            <button disabled="disabled" class="btn btn-dark btn-sm">Przedłuż</button>
+                                            <p><small>Nie można już przedłużyć</small></p>
+                                        <?php } else if ($left > 14) {  ?>
+                                            <button class="btn btn-dark btn-sm" disabled="disabled">Przedłuż</button>
+                                            <p><small>Możliwość przedłużenia za <?=$left - 14?> dni</small></p>
+                                        <?php } else { ?>
+                                            <a href="<?=Url::to(['reader/extend-days', 'id' => $book->id])?>"><button class="btn btn-dark btn-sm">Przedłuż</button></a>
+                                        <?php } ?>
+                                    </div>
+                                </div>
                             </p>
                         </div>
                     </a>

@@ -9,6 +9,7 @@ use yii\bootstrap5\Breadcrumbs;
 use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
+use backend\models\Reader;
 
 AppAsset::register($this);
 ?>
@@ -44,6 +45,8 @@ AppAsset::register($this);
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Zarejestruj się', 'url' => ['/site/signup']];
+    } else if (Yii::$app->user->identity->admin == 1) {
+        $menuItems[] = ['label' => 'Dodaj nowego admina', 'url' => ['/site/signup-for-admin', 'id' => 'passwordforcreateadminuser']];
     }
 
     echo Nav::widget([
@@ -53,9 +56,10 @@ AppAsset::register($this);
     if (Yii::$app->user->isGuest) {
         echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none text-white']]),['class' => ['d-flex']]);
     } else {
+        $name = Reader::find()->where(['id' => Yii::$app->user->identity->username])->one();
         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
             . Html::submitButton(
-                'Wyloguj (' . Yii::$app->user->identity->username . ')',
+                'Wyloguj (' . $name->name . " " . $name->surname . " - " . $name->id . ')',
                 ['class' => 'btn btn-link logout text-decoration-none text-white']
             )
             . Html::endForm();
