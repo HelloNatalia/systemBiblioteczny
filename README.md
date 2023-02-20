@@ -17,7 +17,7 @@ Of course, on every page is a possibility to search for a specific record with *
 - **Books**
 The main function here is to show all books that the library has and how many and which books are available to borrow. 
 The possibilities distinctive for the backend side are functions like creating, editing, deleting, and borrowing selected book.
-<img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG" style="width: 250px"/><img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazka-karta-admin.PNG" style="width: 250px"/>
+<img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG" style="width: 500px"/><img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazka-karta-admin.PNG" style="width: 180px"/>
 
 
 - **Authors**
@@ -47,8 +47,10 @@ The last page on the backend side provides different reports like all borrows ev
 
 ## Used technologies
 
-### Yii Framework 2.0
-It is an MVC PHP web application framework.
+- Yii Framework 2.0
+  It is an MVC PHP web application framework.
+- Bootstrap 5
+- PHP 8
 
 ### Database
 MariaDB - phpMyAdmin
@@ -71,18 +73,3 @@ My database file is here. Insert this SQL into a new database in phpMyAdmin (rem
 
 Congratulations, the project is working! :)
 
-
-
-
-
-
-
-
-
-
-
-
-# systemBiblioteczny
-Projekt systemu bibliotecznego tworzony w yii frameworku w PHP.
-
-![site](https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/autorzy-admin.PNG?raw=true)
