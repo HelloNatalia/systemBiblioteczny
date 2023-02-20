@@ -7,7 +7,7 @@
 
 This application was created to **manage library tasks**. It is separated into frontend (client side) and backend (library, internal side). 
 
-<br><br>
+<br>
 ### Backend - side managed by employees - the ❤️ of the application
 
 The backend part is intended to be used by library employees. There are many functions to create, edit, manage, etc. all important information.
@@ -20,12 +20,9 @@ This part enables a client to signup and login by his/her 'reader ID'. Thanks to
 
 Of course, on every page is a possibility to search for a specific record with **autocomplete forms**, there are also sorting options for many data.
 
-
-
-
-
+<br>
 ### 🔔 Important pages overview
-
+<br>
 - **Books**
 
 The main function here is to show all books that the library has and how many and which books are available to borrow. 
@@ -34,55 +31,57 @@ The possibilities distinctive for the backend side are functions like creating, 
 
 <img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG" style="width: 600px"/>   <img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazka-karta-admin.PNG" style="height: 320px"/>
 
-
+<br>
 - **Authors**
 
 Shows all authors of all the books in the library, and when you click selected author, it will show a list of his/her books.
 
 <img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/autorzy-admin.PNG" style="width: 700px"/>
 
-
+<br>
 - **Borrows**
 
 Shows all active borrows with important data, records after the deadline are highlighted in red. There are options to create a new borrow, settle cash arrears, extend the deadline (only if certain conditions are met), and end the borrow.
 
 <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/wypo%C5%BCyczenia-admin.PNG style="width: 700px"/>
 
-
+<br>
 - **Readers**
 
 Shows all readers registered in the library, when you click on the selected reader, the list of borrowed books will show. Every showed book here has two options: extend the deadline and end borrow.
 
 <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/czytelnicy-admin.PNG style="width: 300px"/>   <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/czytelnik-admin.PNG style="width: 300px"/>   <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/czytelnik-admin2.PNG style="width: 300px"/>
 
-
+<br>
 - **Receivables**
 
 Here are shown only these active borrows that are after the deadline. There is information about how many days are after the date, the amount to pay, etc. and there is a button to settle cash arrears.
 
 <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/naleznosci-admin.PNG style="width: 400px"/>  <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/rozliczenie-admin.PNG style="width: 400px"/>
 
-
+<br>
 - **Reports**
 
 The last page on the backend side provides different reports like all borrows ever made, all returns, paid receivables, extends, and the status of books in the library at the current date. All can be sorted and searched.
 
 <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/raporty-wypo%C5%BCyczenia-admin.PNG style="width: 400px"/>
 
+<br>
+
 ## 💻 Used technologies
-
-- Yii Framework 2.0
+<br>
+- **Yii Framework 2.0**
   It is an MVC PHP web application framework.
-- Bootstrap 5
-- PHP 8
+- **Bootstrap 5**
+- **PHP 8**
+<br>
+- **Database** - MariaDB (phpMyAdmin)
 
-### Database
-MariaDB - phpMyAdmin
+- **Extensions used**
+  - Select2 - Krajee Yii Extensions - Kartik - [Link](https://demos.krajee.com/widget-details/select2)
+  - DatePicker - Class yii\jui\DatePicker - [Link](https://www.yiiframework.com/extension/yiisoft/yii2-jui/doc/api/2.0/yii-jui-datepicker)
 
-### Extensions used
-- Select2 - Krajee Yii Extensions - Kartik - [Link](https://demos.krajee.com/widget-details/select2)
-- DatePicker - Class yii\jui\DatePicker - [Link](https://www.yiiframework.com/extension/yiisoft/yii2-jui/doc/api/2.0/yii-jui-datepicker)
-
+<br>
 ## ⚙️ Installation
 - [ ]  Add unpacked files into a created folder inside xampp/htdocs
 - [ ] Open IDE you use and open created folder in the terminal (go into yii-application -> application name)
