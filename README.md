@@ -104,7 +104,7 @@ It is an MVC PHP web application framework.
 ```php init```
 (to initialize project)
 - [ ] Now you have this project working but there is an error with the database, so go into **common/config/main-local.php** and write the name of your database.
-My database file (named: [library.sql](https://github.com/HelloNatalia/systemBiblioteczny/blob/main/library.sql)) is at main branch. Insert this SQL into a new database in phpMyAdmin (remember, the name of the database must be the same as you inserted into main-local.php file)
+My database file is [here](https://github.com/HelloNatalia/systemBiblioteczny/blob/main/library.sql). Insert this SQL into a new database in phpMyAdmin (remember, the name of the database must be the same as you inserted into main-local.php file)
 
 **🎉 Congratulations, the project is working! 🎉**
 
