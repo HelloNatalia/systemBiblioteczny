@@ -17,7 +17,7 @@ Of course, on every page is a possibility to search for a specific record with *
 - **Books**
 The main function here is to show all books that the library has and how many and which books are available to borrow. 
 The possibilities distinctive for the backend side are functions like creating, editing, deleting, and borrowing selected book.
-
+<img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG" style="width: 100px">
 ![](https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG?raw=true)
 
 - **Authors**
@@ -60,11 +60,12 @@ MariaDB - phpMyAdmin
 ## Installation
 - [ ]  Add unpacked files into a created folder inside xampp/htdocs
 - [ ] Open IDE you use and open created folder in the terminal (go into yii-application -> application name)
-- [ ] Command: ```
-composer create-project
-```
+- [ ] Command: 
+```composer create-project```
 (If you don't have composer you need to install it first)
-- [ ] Command: ```php init```((to initialize project))
+- [ ] Command: 
+```php init```
+(to initialize project)
 - [ ] Now you have this project working but there is an error with the database, so go into **common/config/main-local.php** and write the name of your database
 My database file is here. Insert this SQL into a new database in phpMyAdmin (remember, the name of the database must be the same as you inserted into main-local.php file)
 
