@@ -23,7 +23,7 @@ use yii\helpers\Html;
                     skontaktuj się z oddziałem biblioteki i na miejscu 
                     bądź mailowo wypełnij odpowiedni formularz.
                 </p>
-                <p><?= Html::a('Kontakt &raquo;', ['contact'], ['class' => 'btn btn-outline-secondary']) ?></p>
+                <p><?= Html::a('Kontakt &raquo;', ['contact'], ['class' => 'btn btn-outline-success']) ?></p>
             </div>
             <div class="col-12 col-md-6 col-lg-3 p-2">
                 <h2 class="fs-3">Jak założyć konto?</h2>
@@ -32,7 +32,7 @@ use yii\helpers\Html;
                     konta, załóż je podając swój numer identyfikacyjny. Po zarejestrowaniu 
                     przejdź na podany adres e-mail i zweryfikuj konto. Gotowe!
                 </p>
-                <p><?= Html::a('Rejestracja &raquo;', ['signup'], ['class' => 'btn btn-outline-secondary']) ?></p>
+                <p><?= Html::a('Rejestracja &raquo;', ['signup'], ['class' => 'btn btn-outline-success']) ?></p>
             </div>
             <div class="col-12 col-md-6 col-lg-3 p-2">
                 <h2 class="fs-3">Logowanie</h2>
@@ -42,7 +42,7 @@ use yii\helpers\Html;
                     zdalny dostęp do wszystkich informacji o Twoim koncie oraz 
                     o wypożyczonych przez Ciebie książkach.
                 </p>
-                <p><?= Html::a('Logowanie &raquo;', ['login'], ['class' => 'btn btn-outline-secondary']) ?></p>
+                <p><?= Html::a('Logowanie &raquo;', ['login'], ['class' => 'btn btn-outline-success']) ?></p>
             </div>
             <div class="col-12 col-md-6 col-lg-3 p-2">
                 <h2 class="fs-3">Możliwości</h2>
@@ -62,7 +62,7 @@ use yii\helpers\Html;
                     wszystkie wypożyczone książki wraz z terminem zwrotu i informacją 
                     ile zostało dni.
                 </p>
-                <p><?= Html::a('Moje konto &raquo;', ['reader/index'], ['class' => 'btn btn-outline-secondary']) ?></p>
+                <p><?= Html::a('Moje konto &raquo;', ['reader/index'], ['class' => 'btn btn-outline-success']) ?></p>
             </div>
             <div class="col-12 col-md-4 col-lg-4 p-2">
                 <h2 class="fs-3">Książki</h2>
@@ -71,7 +71,7 @@ use yii\helpers\Html;
                     Z pomocą intuicyjnego formularza wyszukiwania możesz w szybki i prosty sposób wyszukać 
                     interesującą Cię pozycję a następnie po kliknięciu w daną książkę możesz zobaczyć jej szczegóły.
                 </p>
-                <p><?= Html::a('Książki &raquo;', ['books/index'], ['class' => 'btn btn-outline-secondary']) ?></p>
+                <p><?= Html::a('Książki &raquo;', ['books/index'], ['class' => 'btn btn-outline-success']) ?></p>
             </div>
             <div class="col-12 col-md-4 col-lg-4 p-2">
                 <h2 class="fs-3">Autorzy</h2>
@@ -80,7 +80,7 @@ use yii\helpers\Html;
                     naszym asortymencie. Możesz w szybki i prosty sposób wyszukać konkretną osobę, a 
                     po kliknięciu na nią pojawią się wszystkie jej książki dostępne w bibliotece.
                 </p>
-                <p><?= Html::a('Autorzy &raquo;', ['books/authors'], ['class' => 'btn btn-outline-secondary']) ?></p>
+                <p><?= Html::a('Autorzy &raquo;', ['books/authors'], ['class' => 'btn btn-outline-success']) ?></p>
             </div>
         </div>
     <?php } ?>

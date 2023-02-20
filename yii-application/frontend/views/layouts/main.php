@@ -54,7 +54,7 @@ AppAsset::register($this);
         'items' => $menuItems,
     ]);
     if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none text-white']]),['class' => ['d-flex']]);
+        echo Html::tag('div',Html::a('Zaloguj',['/site/login'],['class' => ['btn btn-link login text-decoration-none text-white']]),['class' => ['d-flex']]);
     } else {
         $name = Reader::find()->where(['id' => Yii::$app->user->identity->username])->one();
         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])

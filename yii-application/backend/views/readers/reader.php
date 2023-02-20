@@ -87,6 +87,7 @@ use yii\widgets\LinkPager;
     </div>
     <?= $this->render('_search_r', ['searchModel' => $searchModel, 'id' => $model->id])?>
     
+    <div class="row justify-content-center mt-3">
     <?php foreach($books as $book) { 
         $author = Autors::find()->where(['id' => $book->book->autor_id])->one();
         $now = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -102,54 +103,55 @@ use yii\widgets\LinkPager;
         $borrow_date = $borrow_date->format('Y-m-d');
         $return_date = $return_date->format('Y-m-d'); ?>
 
-        <div class="row justify-content-center mt-3">
-            <div class="col-6 col-md-4 col-lg-3 col-xxl-2 m-3">
-                <div class="card" style="width: 14rem;">
-                    <img class="card-img-left" src="<?=Url::to('@web/books_img/' . $book->book->img)?>" alt="Okładka książki">
-                    <a href="<?=Url::toRoute(['books/book', 'id' => $book->book->id])?>" class="text-decoration-none text-reset">
-                        <div class="card-body">
-                            <h5 class="card-title fs-6"><?=$book->book->title?></h5>
-                            <p class="card-text">
-                                <?=$author->name?> <?=$author->surname?>
-                                <p><?=$borrow_date?> - <?=$return_date?></p>
-                            </p>
-                            <p class="card-text">
-                                <div class="row">
-                                    <?php if($after_date) { ?>
-                                        <div class="row justify-content-center align-items-center">
-                                            <div class="col">
-                                                <p style="color: #b32b2e;"><b>Po terminie: <?=$left?> dni</b></p>
-                                            </div>
+        
+        <div class="col-6 col-md-4 col-lg-3 col-xxl-2 m-3">
+            <div class="card" style="width: 14rem;">
+                <img class="card-img-left" src="<?=Url::to('@web/books_img/' . $book->book->img)?>" alt="Okładka książki">
+                <a href="<?=Url::toRoute(['books/book', 'id' => $book->book->id])?>" class="text-decoration-none text-reset">
+                    <div class="card-body">
+                        <h5 class="card-title fs-6"><?=$book->book->title?></h5>
+                        <p class="card-text">
+                            <?=$author->name?> <?=$author->surname?>
+                            <p><?=$borrow_date?> - <?=$return_date?></p>
+                        </p>
+                        <p class="card-text">
+                            <div class="row">
+                                <?php if($after_date) { ?>
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col">
+                                            <p style="color: #b32b2e;"><b>Po terminie: <?=$left?> dni</b></p>
                                         </div>
-                                        <div class="col-5">
-                                            <a href="<?=Url::to(['cash/pay', 'id' => $book->id])?>"><button class="btn btn-danger btn-sm">Rozlicz</button></a>
+                                    </div>
+                                    <div class="col-5">
+                                        <a href="<?=Url::to(['cash/pay', 'id' => $book->id])?>"><button class="btn btn-danger btn-sm">Rozlicz</button></a>
+                                    </div>
+                                <?php } else { ?>
+                                    <div class="row justify-content-center align-items-center">
+                                        <div class="col">
+                                            <p><b>Zostało: <?=$days?> dni</b></p>
                                         </div>
-                                    <?php } else { ?>
-                                        <div class="row justify-content-center align-items-center">
-                                            <div class="col">
-                                                <p><b>Zostało: <?=$days?> dni</b></p>
-                                            </div>
-                                        </div>
-                                        <div class="col-10">
-                                            <?php if($book->extend_quantity >= 2) { ?>
-                                                <button title="Nie można już przedłużyć" disabled="disabled" class="btn btn-dark btn-sm">Przedłuż</button>
-                                            <?php } else if ($left > 14) { 
-                                                $disabled_info = "Możliwość przedłużenia za " . $left . "dni"; ?>
-                                                <button class="btn btn-dark btn-sm" title=<?=$disabled_info?> disabled="disabled">Przedłuż</button>
-                                            <?php } else { ?>
-                                                <a href="<?=Url::to(['borrow/extend-days', 'id' => $book->id])?>"><button class="btn btn-dark btn-sm">Przedłuż</button></a>
-                                            <?php } ?>
-                                            <a href="<?=Url::to(['borrow/end', 'id' => $book->id, 'days' => 0, 'price' => 0])?>"><button class="btn btn-success btn-sm">Zakończ</button></a>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                            </p>
-                        </div>
-                    </a>
-                </div>
+                                    </div>
+                                    <div class="col-10">
+                                        <?php if($book->extend_quantity >= 2) { ?>
+                                            <button title="Nie można już przedłużyć" disabled="disabled" class="btn btn-dark btn-sm">Przedłuż</button>
+                                        <?php } else if ($left > 14) { 
+                                            $disabled_info = "Możliwość przedłużenia za " . $left . "dni"; ?>
+                                            <button class="btn btn-dark btn-sm" title=<?=$disabled_info?> disabled="disabled">Przedłuż</button>
+                                        <?php } else { ?>
+                                            <a href="<?=Url::to(['borrow/extend-days', 'id' => $book->id])?>"><button class="btn btn-dark btn-sm">Przedłuż</button></a>
+                                        <?php } ?>
+                                        <a href="<?=Url::to(['borrow/end', 'id' => $book->id, 'days' => 0, 'price' => 0])?>"><button class="btn btn-success btn-sm">Zakończ</button></a>
+                                    </div>
+                                <?php } ?>
+                            </div>
+                        </p>
+                    </div>
+                </a>
             </div>
         </div>
+        
     <?php } ?>
+    </div>
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8 col-md-5 col-lg-2">
             <?php echo LinkPager::widget([
