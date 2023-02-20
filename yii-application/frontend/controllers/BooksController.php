@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\controllers;
+namespace frontend\controllers;
 
 use Yii;
 use yii\web\Controller;
@@ -10,7 +10,6 @@ use backend\models\SearchBooks;
 use backend\models\SearchAutors;
 use backend\models\Autors;
 use backend\models\Categories;
-use yii\helpers\Url;
 
 
 class BooksController extends \yii\web\Controller
@@ -46,96 +45,10 @@ class BooksController extends \yii\web\Controller
 
     }
 
-    public function actionCreate($id)
-    {
-        $books = new Books();
-        $autors = new Autors();
-        $categories = new Categories();
-
-        if($autors->load(Yii::$app->request->post()))
-        {   
-            $ifexists = $this->ifAuthorExists($autors);
-            // Autors::find()->where(['like', 'name', $autors->name, false])->andWhere(['like', 'surname', $autors->surname, false])->andWhere(['like', 'country', $autors->country, false])->one();
-
-            if($ifexists && $books->load(Yii::$app->request->post()))
-            {
-                $books->autor_id = (int) $ifexists->id;
-                $this->getBookData($books, true);
-            }
-
-            elseif($books->load(Yii::$app->request->post()) && $autors->save(false))
-            {
-                $books->autor_id = $autors->id;
-                $this->getBookData($books, true);
-            }
-        }
-
-        if($id != ""){
-            if($one = Autors::find()->where(['id' => $id])->one()) {
-                $autors->name = $one->name;
-                $autors->surname = $one->surname;
-                $autors->country = $one->country;
-            }
-        }
-
-        return $this->render('create', [
-            'books' => $books,
-            'autors' => $autors,
-            'categories' => $categories
-        ]);
-    }
-
     public function actionBook($id)
     {
         $model = Books::find()->leftJoin('autors', 'autors.id=books.autor_id')->leftJoin('categories', 'categories.id=books.category_id')->where(['books.id' => $id])->one();
         return $this->render('book', ['model' => $model]);
-    }
-
-    public function actionUpdate($id)
-    {
-        $books = Books::findOne(['id' => $id]);
-        $autors = Autors::findOne(['id' => $books->autor_id]);
-
-        if($autors->load(Yii::$app->request->post()))
-        {   
-            $ifexists = $this->ifAuthorExists($autors);
-            // Autors::find()->where(['like', 'name', $autors->name, false])->andWhere(['like', 'surname', $autors->surname, false])->andWhere(['like', 'country', $autors->country, false])->one();
-
-            if($ifexists && $books->load(Yii::$app->request->post()))
-            {
-                $books->autor_id = (int) $ifexists->id;
-                $this->getBookData($books, false);
-            }
-
-            elseif($books->load(Yii::$app->request->post()) && $autors->save(false))
-            {
-                $books->autor_id = $autors->id;
-                $this->getBookData($books, false);
-            }
-        }
-
-        return $this->render('update', ['books' => $books, 'autors' => $autors]);
-    }
-
-    public function actionDeleteView($id)
-    {
-        $model = Books::find()->leftJoin('autors', 'autors.id=books.autor_id')->leftJoin('categories', 'categories.id=books.category_id')->where(['books.id' => $id])->one();
-
-        return $this->render('delete-view', ['model' => $model]);
-        
-    }
-
-    public function actionDelete($id)
-    {   
-        if($model = Books::findOne(['id' => $id]))
-        {
-            if($model->delete())
-            {
-                Yii::$app->session->setFlash('success', 'Udało się usunąć książkę!');
-                return $this->redirect(['index']);
-            }
-        }
-        
     }
 
     public function actionAuthors()
@@ -186,29 +99,8 @@ class BooksController extends \yii\web\Controller
 
 
 
-    private function getBookData($books, $bool)
-    {
-        if($bool)
-        {
-            $image = UploadedFile::getInstance($books, 'img');
-            
-            $image2 = UploadedFile::getInstance($books, 'img');
-            if(!file_exists((Url::to('@webback/frontend/web/books_img/')))){
-                mkdir(Url::to('@webback/frontend/web/books_img/'), 0777, true);
-            }
-            $imageName = Url::to('@webback/frontend/web/books_img/').'/'.$image->baseName . '.' . $image->extension;
-            $image2->saveAs($imageName);
-            
-            $image->saveAs('books_img/' . $image->baseName . '.' . $image->extension);
-            $books->img = $image->baseName . '.' . $image->extension;
-        }
-        
 
-        if($books->save(false)) {
-            Yii::$app->session->setFlash('success', 'Udało się dodać książkę!');
-            return $this->redirect(['book', 'id' => $books->id]);
-        }
-    }
+
 
     private function ifAuthorExists($model)
     {   
@@ -238,5 +130,4 @@ class BooksController extends \yii\web\Controller
         }
         return $authorsData;
     }
-
 }

@@ -7,25 +7,30 @@
 use yii\bootstrap5\Html;
 use yii\bootstrap5\ActiveForm;
 
-$this->title = 'Resend verification email';
-$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-resend-verification-email">
-    <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Please fill out your email. A verification email will be sent there.</p>
 
+<div class="container">
     <div class="row">
-        <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'resend-verification-email-form']); ?>
-
-            <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
-
-            <div class="form-group">
-                <?= Html::submitButton('Send', ['class' => 'btn btn-primary']) ?>
-            </div>
-
-            <?php ActiveForm::end(); ?>
+        <div class="col">
+            <p class="display-5 fs-2 mt-4">Ponowne wysłanie e-maila weryfikującego</p>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <p>Wpisz swój e-mail, na który zostanie ponownie wysłany link weryfikacyjny.</p>
+        </div>
+    </div>
+    <?php $form = ActiveForm::begin(['id' => 'resend-verification-email-form']); ?>
+    <div class="row">
+        <div class="col-5">
+            <?= $form->field($model, 'email')->textInput(['autofocus' => true])->label("E-mail") ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <?= Html::submitButton('Wyślij', ['class' => 'btn btn-success']) ?>
+        </div>
+    </div>
+    <?php ActiveForm::end(); ?>
 </div>

@@ -22,8 +22,10 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
+<?php Yii::$app->name = "Biblioteka"; ?>
 <body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
+
 
 <header>
     <?php
@@ -35,12 +37,13 @@ AppAsset::register($this);
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
+        ['label' => 'Moje konto', 'url' => ['/reader/index']],
+        ['label' => 'Książki', 'url' => ['/books/index']],
+        ['label' => 'Autorzy', 'url' => ['/books/authors']],
+        ['label' => 'Kontakt', 'url' => ['/site/contact']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Zarejestruj się', 'url' => ['/site/signup']];
     }
 
     echo Nav::widget([
@@ -48,12 +51,12 @@ AppAsset::register($this);
         'items' => $menuItems,
     ]);
     if (Yii::$app->user->isGuest) {
-        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none']]),['class' => ['d-flex']]);
+        echo Html::tag('div',Html::a('Login',['/site/login'],['class' => ['btn btn-link login text-decoration-none text-white']]),['class' => ['d-flex']]);
     } else {
         echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
+                'Wyloguj (' . Yii::$app->user->identity->username . ')',
+                ['class' => 'btn btn-link logout text-decoration-none text-white']
             )
             . Html::endForm();
     }

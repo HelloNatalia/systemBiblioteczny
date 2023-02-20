@@ -60,6 +60,7 @@ class BorrowController extends \yii\web\Controller
         $borrow->extend_quantity += 1;
 
         if($borrow->save(false)) {
+            Yii::$app->session->setFlash('success', 'Udało się przedłużyć wypożyczenie!');
             return $this->redirect(['index']);
         }   
     }
@@ -88,6 +89,7 @@ class BorrowController extends \yii\web\Controller
 
         if($returns->save(false)) {
             if($borrow->save(false) && $stock->save(false)) {
+                Yii::$app->session->setFlash('success', 'Zakończono wypożyczenie!');
                 return $this->redirect([$destination]);
             }
         }
@@ -132,6 +134,7 @@ class BorrowController extends \yii\web\Controller
             $borrow->extend_quantity = 0;
 
             if($borrow->save(false)) {
+                Yii::$app->session->setFlash('success', 'Dodano nowe wypożyczenie!');
                 return $this->redirect(['created-borrow', 'id' => $borrow->id]);
             }
         }
