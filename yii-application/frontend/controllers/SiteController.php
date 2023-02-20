@@ -169,7 +169,7 @@ class SiteController extends Controller
 
     public function actionSignupForAdmin($id)
     {
-        if($id == 'passwordforcreateadminuser') {
+        if($id == 'passwordforcreateadminuser' && Yii::$app->user->identity->admin == 1) {
             $model = new SignupForm();
             if ($model->load(Yii::$app->request->post()) && $model->signup1()) {
                 Yii::$app->session->setFlash('success', 'Utworzono konto, na podany adres e-mail został wysłany kod weryfikacyjy.');
