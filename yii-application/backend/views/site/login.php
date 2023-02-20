@@ -31,7 +31,7 @@ use yii\bootstrap5\Html;
                 <?= $form->field($model, 'rememberMe')->checkbox()->label("Zapamiętaj mnie") ?>
 
                 <div class="form-group">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Zaloguj', ['class' => 'btn btn-primary btn-block', 'name' => 'login-button']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
