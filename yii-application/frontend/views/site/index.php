@@ -8,7 +8,7 @@ use yii\helpers\Html;
 
 <div class="container">
     <div class="row">
-        <img src="<?=Url::to('@web/assets/library.jpg')?>" class="img-fluid" alt="Zdjęcie biblioteki">
+        <img src="<?=Url::to('@web/library.jpg')?>" class="img-fluid" alt="Zdjęcie biblioteki">
     </div>
     <div class="container-fluid py-5 text-center">
         <h1 class="display-4">Witaj czytelniku!</h1>
