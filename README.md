@@ -8,6 +8,7 @@
 This application was created to **manage library tasks**. It is separated into frontend (client side) and backend (library, internal side). 
 
 <br>
+
 ### Backend - side managed by employees - the ❤️ of the application
 
 The backend part is intended to be used by library employees. There are many functions to create, edit, manage, etc. all important information.
