@@ -112,6 +112,7 @@ My database file is [here](https://github.com/HelloNatalia/systemBiblioteczny/bl
 
 ## 💡 Hints for using the application
 <br>
+
 ### Creating a new admin user
 You can create a new Admin user by logging in at the client side by super admin account:
 In the database it's:
