@@ -119,9 +119,8 @@ You can create a new Admin user by logging in at the client side by super admin 
 In the database it's:
 
 
-ID: 15
-
-Password: adminpassword
+ID: ```15```
+Password: ```adminpassword```
 
 
 When you are logged in you have to click on the link for creating admin named "Dodaj nowego admina" and fill in the form.
