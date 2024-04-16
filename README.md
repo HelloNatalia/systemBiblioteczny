@@ -5,17 +5,17 @@
 
 ## 🔍 Project Overview
 
-This application was created to **manage library tasks**. It is separated into frontend (client side) and backend (library, internal side). 
+This application was created to **manage library tasks**. It is separated into public (client side) and internal (library) side. 
 
 <br>
 
-### Backend - side managed by employees - the ❤️ of the application
+### Internal Side - side managed by employees - the ❤️ of the application
 
 The backend part is intended to be used by library employees. There are many functions to create, edit, manage, etc. all important information.
 An employee has own admin account on the application and can manage books (see, create, edit, delete, borrow to the reader), borrows (see, create, extend the deadline, settle cash arrears), readers (create, edit, see borrowed books), can also see reports like all borrows, returns, the status of books in the library. 
 
 
-### Frontend - client side
+### Public Side - client side
 
 This part enables a client to signup and login by 'reader ID'. Thanks to that the logged-in user has access to his borrowed books, can see how many days are left to the deadline, and what's importantly, can extend the deadline online. 
 
@@ -29,7 +29,7 @@ Of course, on every page is a possibility to search for a specific record with *
 - **Books**
 
 The main function here is to show all books that the library has and how many and which books are available to borrow. 
-The possibilities distinctive for the backend side are functions like creating, editing, deleting, and borrowing selected book.
+The possibilities distinctive for the internal side are functions like creating, editing, deleting, and borrowing selected book.
 
 
 <img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazki-index-admin.PNG" style="width: 600px"/>   <img src="https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/ksiazka-karta-admin.PNG" style="height: 320px"/>
@@ -70,7 +70,7 @@ Here are shown only these active borrows that are after the deadline. There is i
 
 - **Reports**
 
-The last page on the backend side provides different reports like all borrows ever made, all returns, paid receivables, extends, and the status of books in the library at the current date. All can be sorted and searched.
+The last page on the internal side provides different reports like all borrows ever made, all returns, paid receivables, extends, and the status of books in the library at the current date. All can be sorted and searched.
 
 <img src=https://github.com/HelloNatalia/systemBiblioteczny/blob/readmeimages/raporty-wypo%C5%BCyczenia-admin.PNG style="width: 400px"/>
 
