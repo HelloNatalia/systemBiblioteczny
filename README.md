@@ -125,3 +125,12 @@ Password: ```adminpassword```
 
 When you are logged in you have to click on the link for creating admin named "Dodaj nowego admina" and fill in the form.
 
+<br>
+
+
+## 😎 What have I learned?
+
+This is my first Yii2 application that I've developed independently. Throughout this project, I honed my skills in this framework and in PHP overall. I faced numerous challenges, but I successfully resolved them.
+
+
+
